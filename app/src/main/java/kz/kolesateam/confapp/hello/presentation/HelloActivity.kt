@@ -10,54 +10,18 @@ private const val TAG = "HelloActivity"
 
 class HelloActivity : AppCompatActivity() {
 
-    private val closeHelloButton: Button by lazy {
-        findViewById(R.id.activity_hello_close_hello_button)
-    }
+//    private val closeHelloButton: Button by lazy {
+//        findViewById(R.id.activity_hello_close_hello_button)
+//    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
 
-        closeHelloButton.setOnClickListener {
-            finish()
-        }
-
-        Log.d(TAG, "onCreate")
+//        closeHelloButton.setOnClickListener {
+//            finish()
+//        }
     }
 
-    override fun onRestart() {
-        super.onRestart()
 
-        Log.d(TAG, "onRestart")
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        Log.d(TAG, "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        Log.d(TAG, "onResume")
-    }
-
-    override fun onPause() {
-        Log.d(TAG, "onPause")
-
-        super.onPause()
-    }
-
-    override fun onStop() {
-        Log.d(TAG, "onStop")
-
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        Log.d(TAG, "onDestroy")
-
-        super.onDestroy()
-    }
 }
