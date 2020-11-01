@@ -9,7 +9,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="165dp"
+        android:layout_height="173dp"
         android:background="@color/black">
 
         <LinearLayout
@@ -23,18 +23,18 @@
                 android:id="@+id/kolesa_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="40dp"
                 android:layout_marginBottom="16dp"
                 android:src="@drawable/ic_logo_white" />
 
             <ImageView
                 android:id="@+id/corona_pic1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="100.36dp"
+                android:layout_height="104dp"
                 android:layout_marginBottom="16dp"
                 android:scaleType="center"
-                android:src="@drawable/corona2_1"
-                />
+                android:src="@drawable/corona2_1" />
+
         </LinearLayout>
     </FrameLayout>
 
