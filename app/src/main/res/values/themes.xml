@@ -15,14 +15,16 @@
 
         <item name="android:windowTranslucentStatus">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
-<!--        <item name="android:fitsSystemWindows">false</item>-->
         <item name="android:windowFullscreen">false</item>
-<!--        <item name="android:windowContentOverlay">@null</item>-->
         <item name="android:fitsSystemWindows">false</item>
 
         <!-- Customize your theme here. -->
+        
+    </style>
 
+    <style name="SplashScreenTheme" parent = "Theme.AppCompat.Light.NoActionBar">
 
-
+    <item name="android:windowBackground">@drawable/splash_screen_corona</item>
+<!--        <item name="background">@color/black</item>-->
     </style>
 </resources>

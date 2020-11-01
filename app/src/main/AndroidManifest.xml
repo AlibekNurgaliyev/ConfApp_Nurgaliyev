@@ -10,9 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-
+        <activity android:name=".hello.presentation.HelloActivity" />
         <activity android:name=".hello.presentation.TestHelloActivity"></activity>
-        <activity android:name=".hello.presentation.HelloActivity">
+
+        <activity
+            android:name=".hello.presentation.SplashScreen"
+            android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

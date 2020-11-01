@@ -33,13 +33,9 @@ class HelloActivity : AppCompatActivity() {
 
         editTextName.addTextChangedListener(textWatcher)
 
-
-
-
         continueButton.setOnClickListener {
             saveName(editTextName.text.toString())
             navigationToTestHelloActivity()
-
         }
     }
 
