@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:textColor="@color/black"
-        android:textSize="@dimen/_24sp"
+        android:textSize="@dimen/text_size_24x"
         tools:text="SHARED PREF TEXT HERE"
         />
 
