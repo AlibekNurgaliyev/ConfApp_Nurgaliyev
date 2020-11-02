@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <solid android:color="@color/button_bg_color_disabled"
+    <solid android:color="@color/button_disabled_bg_color"
         />
     <corners android:radius="@dimen/radius_3x"
         />
     <stroke
         android:width="@dimen/stroke_1x"
-        android:color="@color/button_stroke_color_disabled"
+        android:color="@color/button_disabled_stroke_color"
         />
 </shape>

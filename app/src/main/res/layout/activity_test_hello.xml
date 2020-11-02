@@ -14,5 +14,4 @@
         android:textSize="@dimen/text_size_24x"
         tools:text="SHARED PREF TEXT HERE"
         />
-
 </LinearLayout>

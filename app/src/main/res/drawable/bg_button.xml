@@ -4,5 +4,4 @@
         />
     <item android:drawable="@drawable/bg_submit_button_enabled"
         />
-
 </selector>

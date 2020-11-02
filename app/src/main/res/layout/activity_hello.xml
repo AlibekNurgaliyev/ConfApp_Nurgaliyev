@@ -10,7 +10,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/frame_layout_activity_hello_height"
+        android:layout_height="@dimen/activity_hello_layout_height"
         android:background="@color/black"
         >
 
@@ -39,10 +39,8 @@
                 android:scaleType="center"
                 android:src="@drawable/corona_hello_activity_picture"
                 />
-
         </LinearLayout>
     </FrameLayout>
-
 
     <TextView
         android:id="@+id/what_is_your_name"
@@ -55,7 +53,6 @@
         android:textSize="@dimen/text_size_24x"
         android:textStyle="bold"
         />
-
 
     <EditText
         android:id="@+id/edit_text_name"
@@ -81,9 +78,8 @@
         android:padding="@dimen/layout_spacing_10x"
         android:text="@string/continue_button_text"
         android:textAllCaps="false"
-        android:textColor="@drawable/button_text_color_enabled_and_disabled"
+        android:textColor="@color/continue_button_text"
         android:textSize="@dimen/text_size_16x"
         android:typeface="sans"
         />
-
 </LinearLayout>
