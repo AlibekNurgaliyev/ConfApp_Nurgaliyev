@@ -8,12 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-<!--    custom-->
+<!--custom-->
     <color name="text_view_text_color">#1C1819</color>
     <color name="button_text_text_color_disabled">#801C1819</color>
     <color name="button_bg_color_disabled">#1A1C1819</color>
     <color name="button_stroke_color_disabled">#332A81DD</color>
-
     <color name="button_bg_color_enabled">#2A81DD</color>
+    <color name="edit_text_bg_color_stroke">#331C1819</color>
+
 
 </resources>

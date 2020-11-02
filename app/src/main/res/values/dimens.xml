@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--    margin & padding-->
     <dimen name="layout_spacing_16x">16dp</dimen>
     <dimen name="layout_spacing_10x">10dp</dimen>
     <dimen name="layout_spacing_40x">40dp</dimen>
+<!--    text size-->
     <dimen name="text_size_16x">16sp</dimen>
     <dimen name="text_size_24x">24sp</dimen>
+<!--    shapes-->
+    <dimen name="radius_3x">3dp</dimen>
+    <dimen name="stroke_1x">1dp</dimen>
+<!--    layout params-->
+    <dimen name="frame_layout_activity_hello_height">173dp</dimen>
 </resources>

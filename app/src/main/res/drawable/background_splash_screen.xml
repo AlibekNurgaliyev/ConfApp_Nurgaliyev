@@ -8,7 +8,7 @@
     <!-- App logo -->
     <item>
         <bitmap
-            android:src="@drawable/corona2"
+            android:src="@drawable/corona_splash_screen_logo"
             android:gravity="center">
         </bitmap>
     </item>

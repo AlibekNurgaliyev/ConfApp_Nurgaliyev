@@ -2,5 +2,5 @@
     <string name="app_name">ConfApp</string>
     <string name="what_is_your_name">Как тебя зовут?</string>
     <string name="name_hint">Введи имя</string>
-    <string name="button_text">Продолжить</string>
+    <string name="continue_button_text">Продолжить</string>
 </resources>

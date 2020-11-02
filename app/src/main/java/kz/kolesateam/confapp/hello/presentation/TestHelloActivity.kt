@@ -13,8 +13,7 @@ class TestHelloActivity : AppCompatActivity() {
         setContentView(R.layout.test_hello_activity)
 
         val userNameText: TextView = findViewById(R.id.test_hello_activity_output)
-        val userName: String = getSavedUserName()
-        userNameText.text = userName
+        userNameText.text = getSavedUserName()
     }
 
     private fun getSavedUserName(): String {
