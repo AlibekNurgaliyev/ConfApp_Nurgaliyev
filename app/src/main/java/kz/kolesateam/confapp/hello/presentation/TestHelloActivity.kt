@@ -15,8 +15,6 @@ class TestHelloActivity : AppCompatActivity() {
         val userNameText: TextView = findViewById(R.id.test_hello_activity_output)
         val userName: String = getSavedUserName()
         userNameText.text = userName
-
-
     }
 
     private fun getSavedUserName(): String {
@@ -27,6 +25,4 @@ class TestHelloActivity : AppCompatActivity() {
             )
         return sharedPreferences.getString(USER_NAME_KEY, "Default Text") ?: "Default Text"
     }
-
-
 }

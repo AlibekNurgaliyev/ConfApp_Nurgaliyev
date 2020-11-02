@@ -19,12 +19,9 @@
         <item name="android:fitsSystemWindows">false</item>
 
         <!-- Customize your theme here. -->
-        
+
     </style>
-
-    <style name="SplashScreenTheme" parent = "Theme.AppCompat.Light.NoActionBar">
-
-    <item name="android:windowBackground">@drawable/splash_screen_corona</item>
-<!--        <item name="background">@color/black</item>-->
+        <style name="SplashScreenTheme" parent = "Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowBackground">@drawable/splash_screen_corona</item>
     </style>
 </resources>

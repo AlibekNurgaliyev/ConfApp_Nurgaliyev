@@ -7,17 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
 import kz.kolesateam.confapp.R
-
 
 const val USER_NAME_KEY = "user_name"
 const val APPLICATION_SHARED_PREFERENCES = "application"
-
 
 class HelloActivity : AppCompatActivity() {
 
@@ -25,16 +20,15 @@ class HelloActivity : AppCompatActivity() {
         findViewById(R.id.button_continue)
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
-        val editTextName: EditText = findViewById(R.id.edit_text_name)
+        val nameEditText: EditText = findViewById(R.id.edit_text_name)
 
-        editTextName.addTextChangedListener(textWatcher)
+        nameEditText.addTextChangedListener(textWatcher)
 
         continueButton.setOnClickListener {
-            saveName(editTextName.text.toString())
+            saveName(nameEditText.text.toString())
             navigationToTestHelloActivity()
         }
     }
@@ -56,7 +50,6 @@ class HelloActivity : AppCompatActivity() {
 
     }
 
-
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
         }
@@ -69,6 +62,4 @@ class HelloActivity : AppCompatActivity() {
 
         }
     }
-
-
 }

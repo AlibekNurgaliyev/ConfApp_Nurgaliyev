@@ -9,7 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
-        tools:text="SHARED PREF TEXT HERE"
         android:textColor="@color/black"
-        android:textSize="24sp" />
+        android:textSize="@dimen/_24sp"
+        tools:text="SHARED PREF TEXT HERE"
+        />
+
 </LinearLayout>
