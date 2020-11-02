@@ -21,6 +21,7 @@ class HelloActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
         val nameEditText: EditText = findViewById(R.id.edit_text_name)
