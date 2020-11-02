@@ -30,7 +30,7 @@ class HelloActivity : AppCompatActivity() {
 
         continueButton.setOnClickListener {
             saveName(nameEditText.text.toString())
-            navigationToTestHelloActivity()
+            navigateToTestHelloActivity()
         }
     }
 
@@ -45,7 +45,7 @@ class HelloActivity : AppCompatActivity() {
         editor.apply()
     }
 
-    private fun navigationToTestHelloActivity() {
+    private fun navigateToTestHelloActivity() {
         val testIntent = Intent(this, TestHelloActivity::class.java)
         startActivity(testIntent)
 
