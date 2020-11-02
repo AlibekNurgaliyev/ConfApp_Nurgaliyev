@@ -11,7 +11,6 @@ class TestHelloActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_hello)
-
         val userNameText: TextView = findViewById(R.id.test_hello_activity_output)
         userNameText.text = getSavedUserName()
     }

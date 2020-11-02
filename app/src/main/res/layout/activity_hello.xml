@@ -28,7 +28,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/layout_spacing_40x"
                 android:layout_marginBottom="@dimen/layout_spacing_16x"
-                android:src="@drawable/ic_logo_white"
+                android:src="@drawable/logo_kolesa_white"
                 />
 
             <ImageView

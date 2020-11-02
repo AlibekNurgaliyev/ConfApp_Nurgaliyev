@@ -25,9 +25,7 @@ class HelloActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
         val nameEditText: EditText = findViewById(R.id.edit_text_name)
-
         nameEditText.addTextChangedListener(textWatcher)
-
         continueButton.setOnClickListener {
             saveName(nameEditText.text.toString())
             navigateToTestHelloActivity()
@@ -48,19 +46,15 @@ class HelloActivity : AppCompatActivity() {
     private fun navigateToTestHelloActivity() {
         val testIntent = Intent(this, TestHelloActivity::class.java)
         startActivity(testIntent)
-
     }
 
     private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
 
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-        }
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
 
         override fun afterTextChanged(p0: Editable?) {
             continueButton.isEnabled = !p0.toString().isBlank() && !p0.toString().contains(" ")
-
         }
     }
 }
