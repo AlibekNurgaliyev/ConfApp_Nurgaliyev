@@ -23,7 +23,7 @@
                 android:id="@+id/kolesa_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="@dimen/_40dp"
                 android:layout_marginBottom="@dimen/_16dp"
                 android:src="@drawable/ic_logo_white"
                 />
@@ -48,7 +48,7 @@
         android:layout_margin="@dimen/_16dp"
         android:layout_marginStart="@dimen/_16dp"
         android:text="@string/what_is_your_name"
-        android:textColor="#1C1819"
+        android:textColor="@color/text_view_text_color"
         android:textSize="@dimen/_24sp"
         android:textStyle="bold"
         />
@@ -78,7 +78,7 @@
         android:padding="@dimen/_10dp"
         android:text="@string/button_text"
         android:textAllCaps="false"
-        android:textColor="@color/button_text_color_enabled_and_disabled"
+        android:textColor="@drawable/button_text_color_enabled_and_disabled"
         android:textSize="@dimen/_16sp"
         android:typeface="sans"
         />
