@@ -1,63 +1,60 @@
 package kz.kolesateam.confapp.hello.presentation
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Button
+import android.widget.EditText
 import kz.kolesateam.confapp.R
 
-private const val TAG = "HelloActivity"
+const val USER_NAME_KEY = "user_name"
+const val APPLICATION_SHARED_PREFERENCES = "application"
 
 class HelloActivity : AppCompatActivity() {
 
-    private val closeHelloButton: Button by lazy {
-        findViewById(R.id.activity_hello_close_hello_button)
+    private val continueButton: Button by lazy {
+        findViewById(R.id.button_continue)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_hello)
-
-        closeHelloButton.setOnClickListener {
-            finish()
+        val nameEditText: EditText = findViewById(R.id.edit_text_name)
+        nameEditText.addTextChangedListener(textWatcher)
+        continueButton.setOnClickListener {
+            saveName(nameEditText.text.toString())
+            navigateToTestHelloActivity()
         }
-
-        Log.d(TAG, "onCreate")
     }
 
-    override fun onRestart() {
-        super.onRestart()
-
-        Log.d(TAG, "onRestart")
+    private fun saveName(userName: String) {
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences(
+                APPLICATION_SHARED_PREFERENCES,
+                Context.MODE_PRIVATE
+            )
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putString(USER_NAME_KEY, userName)
+        editor.apply()
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        Log.d(TAG, "onStart")
+    private fun navigateToTestHelloActivity() {
+        val testIntent = Intent(this, TestHelloActivity::class.java)
+        startActivity(testIntent)
     }
 
-    override fun onResume() {
-        super.onResume()
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
 
-        Log.d(TAG, "onResume")
-    }
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) = Unit
 
-    override fun onPause() {
-        Log.d(TAG, "onPause")
-
-        super.onPause()
-    }
-
-    override fun onStop() {
-        Log.d(TAG, "onStop")
-
-        super.onStop()
-    }
-
-    override fun onDestroy() {
-        Log.d(TAG, "onDestroy")
-
-        super.onDestroy()
+        override fun afterTextChanged(p0: Editable?) {
+            continueButton.isEnabled = !p0.toString().isBlank() && !p0.toString().contains(" ")
+        }
     }
 }

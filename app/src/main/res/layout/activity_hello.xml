@@ -1,20 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".hello.presentation.HelloActivity">
+    android:orientation="vertical"
+    tools:context=".hello.presentation.HelloActivity"
+    >
 
-    <Button
-        android:id="@+id/activity_hello_close_hello_button"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_hello_layout_height"
+        android:background="@color/black"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg"
+            android:gravity="center"
+            android:orientation="vertical"
+            >
+
+            <ImageView
+                android:id="@+id/kolesa_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/layout_spacing_40x"
+                android:layout_marginBottom="@dimen/layout_spacing_16x"
+                android:src="@drawable/logo_kolesa_white"
+                />
+
+            <ImageView
+                android:id="@+id/corona_pic1"
+                android:layout_width="100.36dp"
+                android:layout_height="104dp"
+                android:layout_marginBottom="@dimen/layout_spacing_16x"
+                android:scaleType="center"
+                android:src="@drawable/corona_hello_activity_picture"
+                />
+        </LinearLayout>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/what_is_your_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Close!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="@dimen/layout_spacing_16x"
+        android:layout_marginStart="@dimen/layout_spacing_16x"
+        android:text="@string/what_is_your_name"
+        android:textColor="@color/text_view_text_color"
+        android:textSize="@dimen/text_size_24x"
+        android:textStyle="bold"
         />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/edit_text_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/layout_spacing_16x"
+        android:layout_marginBottom="@dimen/layout_spacing_16x"
+        android:background="@drawable/bg_name_edit_text_shape"
+        android:hint="@string/name_hint"
+        android:padding="@dimen/layout_spacing_10x"
+        android:paddingStart="@dimen/layout_spacing_16x"
+        android:paddingEnd="@dimen/layout_spacing_16x"
+        android:textSize="@dimen/text_size_16x"
+        />
+
+    <Button
+        android:id="@+id/button_continue"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/layout_spacing_16x"
+        android:background="@drawable/bg_button"
+        android:enabled="false"
+        android:padding="@dimen/layout_spacing_10x"
+        android:text="@string/continue_button_text"
+        android:textAllCaps="false"
+        android:textColor="@color/continue_button_text"
+        android:textSize="@dimen/text_size_16x"
+        android:typeface="sans"
+        />
+</LinearLayout>
