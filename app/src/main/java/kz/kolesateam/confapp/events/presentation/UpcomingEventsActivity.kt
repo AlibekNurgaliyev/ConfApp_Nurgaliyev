@@ -1,7 +1,6 @@
 package kz.kolesateam.confapp.events.presentation
 
 import android.content.Context
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
@@ -13,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.fasterxml.jackson.databind.JsonNode
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -61,19 +59,19 @@ class UpcomingEventsActivity : AppCompatActivity() {
         progressBar.visibility = View.INVISIBLE
         if (hasInternetConnection()) {
             Thread {
-
                 val response: Response<JsonNode> = apiClient.getUpcomingEvents().execute()
                 if (response.isSuccessful) {
                     val body: JsonNode = response.body()!!
                     runOnUiThread {
                         responseTextView.text = body.toString()
-                        responseTextView.setTextColor(Color.parseColor("#2196F3"))
+                        responseTextView.setTextColor(resources.getColor(R.color.activity_upcoming_events_text_color_sync_load))
                     }
                 }
             }.start()
         } else {
-            responseTextView.text = "No internet Access"
-            responseTextView.setTextColor(Color.parseColor("#F44336"))
+            responseTextView.text =
+                getString(R.string.activity_upcoming_events_internet_access_alert)
+            responseTextView.setTextColor(resources.getColor(R.color.activity_upcoming_events_text_color_error))
         }
     }
 
@@ -91,13 +89,13 @@ class UpcomingEventsActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val body: JsonNode = response.body()!!
                     responseTextView.text = body.toString()
-                    responseTextView.setTextColor(Color.parseColor("#4CAF50"))
+                    responseTextView.setTextColor(resources.getColor(R.color.activity_upcoming_events_text_color_async_load))
                 }
             }
 
             override fun onFailure(call: Call<JsonNode>, t: Throwable) {
                 responseTextView.text = t.localizedMessage
-                responseTextView.setTextColor(Color.parseColor("#F44336"))
+                responseTextView.setTextColor(resources.getColor(R.color.activity_upcoming_events_text_color_error))
             }
         })
     }

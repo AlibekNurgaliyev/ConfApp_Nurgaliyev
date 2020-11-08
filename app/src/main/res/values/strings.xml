@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">ConfApp</string>
-    <string name="what_is_your_name">Как тебя зовут?</string>
-    <string name="name_hint">Введи имя</string>
+    <string name="activity_hello_what_is_your_name">Как тебя зовут?</string>
+    <string name="activity_hello_name_hint">Введи имя</string>
+    <string name="activity_upcoming_events_button_sync_loading">Sync loading</string>
+    <string name="activity_upcoming_events_button_async_loading">Async loading</string>
+    <string name="activity_upcoming_events_internet_access_alert">Please check your internet access</string>
     <string name="continue_button_text">Продолжить</string>
-    <string name="continue_text">Continue!</string>
-    <string name="activity_upcoming_events__button_sync_loading">Sync loading</string>
-    <string name="activity_upcoming_events__button_async_loading">Async loading</string>
 </resources>
