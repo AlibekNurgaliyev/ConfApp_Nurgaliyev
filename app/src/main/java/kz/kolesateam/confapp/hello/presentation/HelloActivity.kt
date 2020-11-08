@@ -10,9 +10,11 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 
 const val USER_NAME_KEY = "user_name"
 const val APPLICATION_SHARED_PREFERENCES = "application"
+private const val BASE_URL = "http://37.143.8.68:2020/"
 
 class HelloActivity : AppCompatActivity() {
 
@@ -44,7 +46,7 @@ class HelloActivity : AppCompatActivity() {
     }
 
     private fun navigateToTestHelloActivity() {
-        val testIntent = Intent(this, TestHelloActivity::class.java)
+        val testIntent = Intent(this, UpcomingEventsActivity::class.java)
         startActivity(testIntent)
     }
 
