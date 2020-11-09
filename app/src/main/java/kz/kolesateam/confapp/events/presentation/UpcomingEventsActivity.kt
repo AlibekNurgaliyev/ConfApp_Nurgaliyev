@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.fasterxml.jackson.databind.JsonNode
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
@@ -19,6 +20,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 
 private const val BASE_URL = "http://37.143.8.68:2020/"
+private const val SAVED_INSTANCE_KEY = "KEY"
+
 
 val apiRetrofit: Retrofit = Retrofit.Builder()
     .baseUrl(BASE_URL)
@@ -64,14 +67,14 @@ class UpcomingEventsActivity : AppCompatActivity() {
                     val body: JsonNode = response.body()!!
                     runOnUiThread {
                         responseTextView.text = body.toString()
-                        responseTextView.setTextColor(resources.getColor(R.color.activity_upcoming_events_text_color_sync_load))
+                        responseTextView.setTextColor(ContextCompat.getColor(this, R.color.activity_upcoming_events_text_color_sync_load))
                     }
                 }
             }.start()
         } else {
             responseTextView.text =
                 getString(R.string.activity_upcoming_events_internet_access_alert)
-            responseTextView.setTextColor(resources.getColor(R.color.activity_upcoming_events_text_color_error))
+            responseTextView.setTextColor(ContextCompat.getColor(this, R.color.activity_upcoming_events_text_color_error))
         }
     }
 
@@ -89,14 +92,26 @@ class UpcomingEventsActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val body: JsonNode = response.body()!!
                     responseTextView.text = body.toString()
-                    responseTextView.setTextColor(resources.getColor(R.color.activity_upcoming_events_text_color_async_load))
+                    responseTextView.setTextColor(ContextCompat.getColor(this@UpcomingEventsActivity,R.color.activity_upcoming_events_text_color_async_load))
                 }
             }
 
             override fun onFailure(call: Call<JsonNode>, t: Throwable) {
                 responseTextView.text = t.localizedMessage
-                responseTextView.setTextColor(resources.getColor(R.color.activity_upcoming_events_text_color_error))
+                responseTextView.setTextColor(ContextCompat.getColor(this@UpcomingEventsActivity,R.color.activity_upcoming_events_text_color_error))
             }
         })
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.run {
+            putString(SAVED_INSTANCE_KEY, responseTextView.text.toString())
+        }
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        responseTextView.text = savedInstanceState.getString(SAVED_INSTANCE_KEY)
     }
 }
