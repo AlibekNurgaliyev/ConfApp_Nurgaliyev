@@ -1,9 +1,11 @@
 package kz.kolesateam.confapp.events.presentation
 
 import android.content.Context
+import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
@@ -20,7 +22,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
 
 private const val BASE_URL = "http://37.143.8.68:2020/"
-private const val SAVED_INSTANCE_KEY = "KEY"
+private const val SAVED_INSTANCE_TEXT = "KEY_TEXT"
+private const val SAVED_INSTANCE_COLOR = "KEY_COLOR"
 
 
 val apiRetrofit: Retrofit = Retrofit.Builder()
@@ -40,6 +43,11 @@ class UpcomingEventsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upcoming_events)
         bindViews()
+        if(savedInstanceState!=null){
+            val convertedColorIntToHex = "#"+Integer.toHexString(savedInstanceState.getInt(
+                SAVED_INSTANCE_COLOR))
+            responseTextView.setTextColor(Color.parseColor(convertedColorIntToHex))
+        }
     }
 
     private fun bindViews() {
@@ -105,13 +113,14 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.run {
-            putString(SAVED_INSTANCE_KEY, responseTextView.text.toString())
+            putString(SAVED_INSTANCE_TEXT, responseTextView.text.toString())
+            putInt(SAVED_INSTANCE_COLOR, responseTextView.currentTextColor)
         }
         super.onSaveInstanceState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        responseTextView.text = savedInstanceState.getString(SAVED_INSTANCE_KEY)
+        responseTextView.text = savedInstanceState.getString(SAVED_INSTANCE_TEXT)
     }
 }
