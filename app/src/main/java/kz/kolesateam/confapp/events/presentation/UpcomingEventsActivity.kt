@@ -85,21 +85,18 @@ class UpcomingEventsActivity : AppCompatActivity() {
         progressBar.show()
         if (hasInternetConnection()) {
             Thread {
-//                val response: Response<JsonNode> = apiClient.getUpcomingEvents().execute()
-                val response:Response<ResponseBody> = apiClient.getUpcomingEventsSync().execute()
-                    if (response.isSuccessful) {
-                        val responseBody: ResponseBody = response.body()!!
-                        val responseJsonString = responseBody.string()
-                        val responseJsonArray = JSONArray(responseJsonString)
-                        val branchApiDataList = parseBranchesJsonArray(responseJsonArray)
-                        runOnUiThread {
-                            progressBar.hide()
-//                            setTextAndTextColor(responseBody,
-//                                R.color.activity_upcoming_events_text_color_sync_load)
-                            setTextAndTextColor(branchApiDataList.toString(),R.color.activity_upcoming_events_text_color_sync_load)
-                        }
+                val response: Response<ResponseBody> = apiClient.getUpcomingEventsSync().execute()
+                if (response.isSuccessful) {
+                    val responseBody: ResponseBody = response.body()!!
+                    val responseJsonString = responseBody.string()
+                    val responseJsonArray = JSONArray(responseJsonString)
+                    val branchApiDataListSync = parseBranchesJsonArray(responseJsonArray)
+                    runOnUiThread {
+                        progressBar.hide()
+                        setTextAndTextColor(branchApiDataListSync.toString(),
+                            R.color.activity_upcoming_events_text_color_sync_load)
                     }
-
+                }
             }.start()
         } else {
             progressBar.hide()
@@ -119,33 +116,23 @@ class UpcomingEventsActivity : AppCompatActivity() {
         responseTextView.text = ""
         progressBar.show()
         apiClient.getUpcomingEventsAsync().enqueue(object : Callback<List<BranchApiData>> {
-            override fun onResponse(call: Call<List<BranchApiData>>, response: Response<List<BranchApiData>>) {
+            override fun onResponse(call: Call<List<BranchApiData>>,
+                                    response: Response<List<BranchApiData>>) {
                 if (response.isSuccessful) {
                     progressBar.hide()
                     val responseBody = response.body()!!
-                    val branchApiDataList = responseBody
-
-
-                    setTextAndTextColor(branchApiDataList.toString(),
+                    val branchApiDataListAsync = responseBody
+                    setTextAndTextColor(branchApiDataListAsync.toString(),
                         R.color.activity_upcoming_events_text_color_async_load)
                 }
             }
 
             override fun onFailure(call: Call<List<BranchApiData>>, t: Throwable) {
                 progressBar.hide()
-                setTextAndTextColor(t.localizedMessage, R.color.activity_upcoming_events_text_color_error)
+                setTextAndTextColor(t.localizedMessage,
+                    R.color.activity_upcoming_events_text_color_error)
             }
         })
-    }
-
-    private fun setTextAndTextColor(body: JsonNode, colorId: Int) {
-        responseTextView.text = body.toString()
-        responseTextView.setTextColor(ContextCompat.getColor(this@UpcomingEventsActivity, colorId))
-    }
-
-    private fun setTextAndTextColor(body: ResponseBody, colorId: Int) {
-        responseTextView.text = body.toString()
-        responseTextView.setTextColor(ContextCompat.getColor(this@UpcomingEventsActivity, colorId))
     }
 
     private fun setTextAndTextColor(textValue: String, colorId: Int) {
@@ -167,30 +154,28 @@ class UpcomingEventsActivity : AppCompatActivity() {
         return String.format("#%06X", 0xFFFFFF and intColor)
     }
 
-
     private fun parseBranchesJsonArray(
-        responseJsonArray:JSONArray
-    ):List<BranchApiData>{
+        responseJsonArray: JSONArray
+    ): List<BranchApiData> {
+        val branchList = mutableListOf<BranchApiData>()
 
-        val brachList = mutableListOf<BranchApiData>()
-
-        for (index in 0 until responseJsonArray.length()){
-            val branchJsonObject= (responseJsonArray[index] as? JSONObject) ?: continue
+        for (index in 0 until responseJsonArray.length()) {
+            val branchJsonObject = (responseJsonArray[index] as? JSONObject) ?: continue
             val branchApiData = parseBranchJsonObject(branchJsonObject)
-            brachList.add(branchApiData)
+            branchList.add(branchApiData)
         }
-        return brachList
+        return branchList
     }
 
     private fun parseBranchJsonObject(
-        branJsonObject : JSONObject
-    ):BranchApiData{
+        branJsonObject: JSONObject
+    ): BranchApiData {
         val id = branJsonObject.getInt("id")
         val title = branJsonObject.getString("title")
         val eventsJsonArray = branJsonObject.getJSONArray("events")
         val eventsApiList = mutableListOf<EventApiData>()
 
-        for (index in 0 until eventsJsonArray.length()){
+        for (index in 0 until eventsJsonArray.length()) {
             val eventJsonObject = (eventsJsonArray[index] as? JSONObject) ?: continue
             val eventApiData = parseEventJsonObject(eventJsonObject)
             eventsApiList.add(eventApiData)
@@ -203,36 +188,44 @@ class UpcomingEventsActivity : AppCompatActivity() {
     }
 
     private fun parseEventJsonObject(
-        eventJsonObject:JSONObject
-    ):EventApiData{
+        eventJsonObject: JSONObject
+    ): EventApiData {
         val id = eventJsonObject.getInt("id")
+        val startTime = eventJsonObject.getString("startTime")
+        val endTime = eventJsonObject.getString("endTime")
         val title = eventJsonObject.getString("title")
-
-
-        val speakerJsonObject:JSONObject? = (eventJsonObject.get("speaker") as? JSONObject)
-        var speakerData : SpeakerApiData? = null
+        val description = eventJsonObject.getString("description")
+        val place = eventJsonObject.getString("place")
+        val speakerJsonObject: JSONObject? = (eventJsonObject.get("speaker") as? JSONObject)
+        var speakerData: SpeakerApiData? = null
         speakerJsonObject?.let {
             speakerData = parseSpeakerJsonObject(it)
         }
 
-
         return EventApiData(
             id = id,
+            startTime = startTime,
+            endTime = endTime,
             title = title,
+            description = description,
+            place = place,
             speaker = speakerData
-
         )
     }
 
     private fun parseSpeakerJsonObject(
         speakerJsonObject: JSONObject
-    ):SpeakerApiData = SpeakerApiData(
-        fullName = speakerJsonObject.getString("fullName")
-    )
+    ): SpeakerApiData {
+        val id = speakerJsonObject.getInt("id")
+        val fullName = speakerJsonObject.getString("fullName")
+        val job = speakerJsonObject.getString("job")
+        val photoUrl = speakerJsonObject.getString("photoUrl")
 
-
-
-
-
-
+        return SpeakerApiData(
+            id = id,
+            fullName = fullName,
+            job = job,
+            photoUrl = photoUrl
+        )
+    }
 }
