@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.fasterxml.jackson.databind.JsonNode
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
@@ -75,7 +74,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
     }
 
     private fun loadApiDataSync() {
-        responseTextView.text = ""
+        responseTextView.hide()
         progressBar.show()
         if (hasInternetConnection()) {
             Thread {
@@ -84,15 +83,23 @@ class UpcomingEventsActivity : AppCompatActivity() {
                     val body: JsonNode = response.body()!!
                     runOnUiThread {
                         progressBar.hide()
-                        setTextAndTextColor(body,
+                        responseTextView.show()
+                        setTextAndTextColor(
+                            responseTextView,
+                            body,
+                            this,
                             R.color.activity_upcoming_events_text_color_sync_load)
                     }
                 }
             }.start()
         } else {
             progressBar.hide()
-            setTextAndTextColor(getString(R.string.activity_upcoming_events_internet_access_alert),
-                R.color.activity_upcoming_events_text_color_error)
+            setTextAndTextColor(
+                responseTextView,
+                getString(R.string.activity_upcoming_events_internet_access_alert),
+                this,
+                R.color.activity_upcoming_events_text_color_error
+            )
         }
     }
 
@@ -104,43 +111,39 @@ class UpcomingEventsActivity : AppCompatActivity() {
     }
 
     private fun loadApiDataAsync() {
-        responseTextView.text = ""
+        responseTextView.hide()
         progressBar.show()
         apiClient.getUpcomingEvents().enqueue(object : Callback<JsonNode> {
             override fun onResponse(call: Call<JsonNode>, response: Response<JsonNode>) {
                 if (response.isSuccessful) {
                     progressBar.hide()
+                    responseTextView.show()
                     val body: JsonNode = response.body()!!
-                    setTextAndTextColor(body,
+                    setTextAndTextColor(
+                        responseTextView,
+                        body,
+                        this@UpcomingEventsActivity,
                         R.color.activity_upcoming_events_text_color_async_load)
                 }
             }
 
             override fun onFailure(call: Call<JsonNode>, t: Throwable) {
                 progressBar.hide()
-                setTextAndTextColor(t.localizedMessage, R.color.activity_upcoming_events_text_color_error)
+                setTextAndTextColor(
+                    responseTextView,
+                    t.localizedMessage,
+                    this@UpcomingEventsActivity,
+                    R.color.activity_upcoming_events_text_color_error)
             }
         })
     }
 
-    private fun setTextAndTextColor(body: JsonNode, colorId: Int) {
-        responseTextView.text = body.toString()
-        responseTextView.setTextColor(ContextCompat.getColor(this@UpcomingEventsActivity, colorId))
+    private fun View.show() {
+        visibility = View.VISIBLE
     }
 
-    private fun setTextAndTextColor(textValue: String, colorId: Int) {
-        responseTextView.text = textValue
-        responseTextView.setTextColor(ContextCompat.getColor(this@UpcomingEventsActivity, colorId))
-    }
-
-    private fun View.show(): View {
-        if (visibility != View.VISIBLE) visibility = View.VISIBLE
-        return this
-    }
-
-    private fun View.hide(): View {
-        if (visibility != View.GONE) visibility = View.GONE
-        return this
+    private fun View.hide() {
+        visibility = View.GONE
     }
 
     private fun convertIntToHex(intColor: Int): String {
