@@ -41,13 +41,6 @@
                     />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/activity_upcoming_events_text_view"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/layout_spacing_10x"
-                />
-
             <ProgressBar
                 android:id="@+id/activity_upcoming_events_progress_bar"
                 android:layout_width="wrap_content"
@@ -56,7 +49,14 @@
                 android:layout_marginTop="@dimen/layout_spacing_10x"
                 android:indeterminateDrawable="@drawable/spinner_png"
                 android:padding="@dimen/layout_spacing_10x"
-                android:visibility="invisible"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:id="@+id/activity_upcoming_events_text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/layout_spacing_10x"
                 />
         </LinearLayout>
     </ScrollView>

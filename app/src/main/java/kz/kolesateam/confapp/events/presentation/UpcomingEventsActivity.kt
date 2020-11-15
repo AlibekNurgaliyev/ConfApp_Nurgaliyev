@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.fasterxml.jackson.databind.JsonNode
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
@@ -81,7 +80,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
     }
 
     private fun loadApiDataSync() {
-        responseTextView.text = ""
+        responseTextView.hide()
         progressBar.show()
         if (hasInternetConnection()) {
             Thread {
@@ -93,15 +92,25 @@ class UpcomingEventsActivity : AppCompatActivity() {
                     val branchApiDataListSync = parseBranchesJsonArray(responseJsonArray)
                     runOnUiThread {
                         progressBar.hide()
-                        setTextAndTextColor(branchApiDataListSync.toString(),
+//                        setTextAndTextColor(branchApiDataListSync.toString(),
+//                            R.color.activity_upcoming_events_text_color_sync_load)
+                        responseTextView.show()
+                        setTextAndTextColor(
+                            responseTextView,
+                            branchApiDataListSync.toString(),
+                            this,
                             R.color.activity_upcoming_events_text_color_sync_load)
                     }
                 }
             }.start()
         } else {
             progressBar.hide()
-            setTextAndTextColor(getString(R.string.activity_upcoming_events_internet_access_alert),
-                R.color.activity_upcoming_events_text_color_error)
+            setTextAndTextColor(
+                responseTextView,
+                getString(R.string.activity_upcoming_events_internet_access_alert),
+                this,
+                R.color.activity_upcoming_events_text_color_error
+            )
         }
     }
 
@@ -113,7 +122,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
     }
 
     private fun loadApiDataAsync() {
-        responseTextView.text = ""
+        responseTextView.hide()
         progressBar.show()
         apiClient.getUpcomingEventsAsync().enqueue(object : Callback<List<BranchApiData>> {
             override fun onResponse(call: Call<List<BranchApiData>>,
@@ -122,32 +131,33 @@ class UpcomingEventsActivity : AppCompatActivity() {
                     progressBar.hide()
                     val responseBody = response.body()!!
                     val branchApiDataListAsync = responseBody
-                    setTextAndTextColor(branchApiDataListAsync.toString(),
+//                    setTextAndTextColor(branchApiDataListAsync.toString(),
+//                        R.color.activity_upcoming_events_text_color_async_load)
+                    setTextAndTextColor(
+                        responseTextView,
+                        branchApiDataListAsync.toString(),
+                        this@UpcomingEventsActivity,
                         R.color.activity_upcoming_events_text_color_async_load)
                 }
             }
 
             override fun onFailure(call: Call<List<BranchApiData>>, t: Throwable) {
                 progressBar.hide()
-                setTextAndTextColor(t.localizedMessage,
+                setTextAndTextColor(
+                    responseTextView,
+                    t.localizedMessage,
+                    this@UpcomingEventsActivity,
                     R.color.activity_upcoming_events_text_color_error)
             }
         })
     }
 
-    private fun setTextAndTextColor(textValue: String, colorId: Int) {
-        responseTextView.text = textValue
-        responseTextView.setTextColor(ContextCompat.getColor(this@UpcomingEventsActivity, colorId))
+    private fun View.show() {
+        visibility = View.VISIBLE
     }
 
-    private fun View.show(): View {
-        if (visibility != View.VISIBLE) visibility = View.VISIBLE
-        return this
-    }
-
-    private fun View.hide(): View {
-        if (visibility != View.GONE) visibility = View.GONE
-        return this
+    private fun View.hide() {
+        visibility = View.GONE
     }
 
     private fun convertIntToHex(intColor: Int): String {
