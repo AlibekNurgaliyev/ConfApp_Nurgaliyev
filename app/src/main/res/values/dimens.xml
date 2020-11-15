@@ -10,6 +10,8 @@
 <!--    shapes-->
     <dimen name="radius_3x">3dp</dimen>
     <dimen name="stroke_1x">1dp</dimen>
+<!--    Button-->
+    <dimen name="activity_upcoming_events_button_width">160dp</dimen>
 <!--    layout params-->
     <dimen name="activity_hello_layout_height">173dp</dimen>
 </resources>
