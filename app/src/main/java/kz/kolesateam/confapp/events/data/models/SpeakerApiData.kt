@@ -13,5 +13,4 @@ data class SpeakerApiData(
     val job: String?,
     @JsonProperty("photoUrl")
     val photoUrl: String?
-
 )

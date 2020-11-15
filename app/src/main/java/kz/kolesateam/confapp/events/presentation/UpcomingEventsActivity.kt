@@ -10,7 +10,6 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.fasterxml.jackson.databind.JsonNode
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.models.BranchApiData
@@ -92,8 +91,6 @@ class UpcomingEventsActivity : AppCompatActivity() {
                     val branchApiDataListSync = parseBranchesJsonArray(responseJsonArray)
                     runOnUiThread {
                         progressBar.hide()
-//                        setTextAndTextColor(branchApiDataListSync.toString(),
-//                            R.color.activity_upcoming_events_text_color_sync_load)
                         responseTextView.show()
                         setTextAndTextColor(
                             responseTextView,
@@ -105,6 +102,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
             }.start()
         } else {
             progressBar.hide()
+            responseTextView.show()
             setTextAndTextColor(
                 responseTextView,
                 getString(R.string.activity_upcoming_events_internet_access_alert),
@@ -129,10 +127,9 @@ class UpcomingEventsActivity : AppCompatActivity() {
                                     response: Response<List<BranchApiData>>) {
                 if (response.isSuccessful) {
                     progressBar.hide()
+                    responseTextView.show()
                     val responseBody = response.body()!!
                     val branchApiDataListAsync = responseBody
-//                    setTextAndTextColor(branchApiDataListAsync.toString(),
-//                        R.color.activity_upcoming_events_text_color_async_load)
                     setTextAndTextColor(
                         responseTextView,
                         branchApiDataListAsync.toString(),
@@ -143,9 +140,10 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<List<BranchApiData>>, t: Throwable) {
                 progressBar.hide()
+                responseTextView.show()
                 setTextAndTextColor(
                     responseTextView,
-                    t.localizedMessage,
+                    t.localizedMessage!!,
                     this@UpcomingEventsActivity,
                     R.color.activity_upcoming_events_text_color_error)
             }

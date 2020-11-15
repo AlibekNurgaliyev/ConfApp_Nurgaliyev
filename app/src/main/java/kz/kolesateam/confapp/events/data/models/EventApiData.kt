@@ -2,7 +2,6 @@ package kz.kolesateam.confapp.events.data.models
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.*
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class EventApiData(
