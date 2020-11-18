@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.fasterxml.jackson.databind.ObjectMapper
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.models.BranchApiData
@@ -41,6 +42,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
     private lateinit var syncLoadDataButton: Button
     private lateinit var asyncLoadDataButton: Button
     private lateinit var progressBar: ProgressBar
+    private val jsonMapper = ObjectMapper()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,7 +96,8 @@ class UpcomingEventsActivity : AppCompatActivity() {
                         responseTextView.show()
                         setTextAndTextColor(
                             responseTextView,
-                            branchApiDataListSync.toString(),
+                            jsonMapper.writerWithDefaultPrettyPrinter()
+                                .writeValueAsString(branchApiDataListSync),
                             this,
                             R.color.activity_upcoming_events_text_color_sync_load)
                     }
@@ -131,7 +134,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
                     val responseBody = response.body()!!
                     setTextAndTextColor(
                         responseTextView,
-                        responseBody.toString(),
+                        jsonMapper.writerWithDefaultPrettyPrinter().writeValueAsString(responseBody),
                         this@UpcomingEventsActivity,
                         R.color.activity_upcoming_events_text_color_async_load)
                 }
@@ -175,11 +178,11 @@ class UpcomingEventsActivity : AppCompatActivity() {
     }
 
     private fun parseBranchJsonObject(
-        branJsonObject: JSONObject
+        branchJsonObject: JSONObject
     ): BranchApiData {
-        val id = branJsonObject.getInt("id")
-        val title = branJsonObject.getString("title")
-        val eventsJsonArray = branJsonObject.getJSONArray("events")
+        val id = branchJsonObject.getInt("id")
+        val title = branchJsonObject.getString("title")
+        val eventsJsonArray = branchJsonObject.getJSONArray("events")
         val eventsApiList = mutableListOf<EventApiData>()
 
         for (index in 0 until eventsJsonArray.length()) {
