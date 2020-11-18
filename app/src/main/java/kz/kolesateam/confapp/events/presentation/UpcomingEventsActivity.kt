@@ -129,10 +129,9 @@ class UpcomingEventsActivity : AppCompatActivity() {
                     progressBar.hide()
                     responseTextView.show()
                     val responseBody = response.body()!!
-                    val branchApiDataListAsync = responseBody
                     setTextAndTextColor(
                         responseTextView,
-                        branchApiDataListAsync.toString(),
+                        responseBody.toString(),
                         this@UpcomingEventsActivity,
                         R.color.activity_upcoming_events_text_color_async_load)
                 }
