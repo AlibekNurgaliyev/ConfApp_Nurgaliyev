@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="4dp"
+    android:paddingHorizontal="16dp"
+    android:paddingBottom="16dp"
+    android:background="@color/white"
+
+    >
+
+    <TextView
+        android:id="@+id/event_state"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingHorizontal="4dp"
+        android:textSize="13sp"
+        android:text="Event state"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_event_state"
+        tools:ignore="MissingConstraints"
+        />
+
+    <TextView
+        android:id="@+id/date_and_place_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/event_state"
+        android:textColor="#888B94"
+        android:text="saassaassa"
+        android:textSize="14dp"
+        />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_favorite_border"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/date_and_place_text"
+        app:layout_constraintBottom_toBottomOf="@id/date_and_place_text"
+        />
+    <TextView
+        android:id="@+id/event_speaker_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/date_and_place_text"
+        android:text="Speaker name"
+        android:textColor="#1C1819"
+        android:textSize="14dp"
+        android:layout_marginTop="8dp"
+        android:textStyle="bold"
+        />
+
+    <TextView
+        android:id="@+id/event_company_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/event_speaker_name"
+        android:textColor="#888B94"
+        android:text="speaker company"
+        android:textSize="13dp"
+        android:layout_marginTop="8dp"
+
+        />
+
+    <TextView
+        android:id="@+id/event_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/event_company_name"
+        android:text="Speaker Event title"
+        android:textColor="#1C1819"
+        android:textSize="14dp"
+        android:layout_marginTop="8dp"
+
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
