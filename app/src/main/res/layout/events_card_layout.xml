@@ -1,84 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:paddingTop="4dp"
-    android:paddingHorizontal="16dp"
-    android:paddingBottom="16dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/text_size_14x"
     android:background="@color/white"
-
+    android:paddingHorizontal="@dimen/layout_spacing_16x"
+    android:paddingTop="@dimen/layout_spacing_4x"
+    android:paddingBottom="@dimen/layout_spacing_16x"
     >
 
     <TextView
         android:id="@+id/event_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:paddingHorizontal="4dp"
-        android:textSize="13sp"
-        android:text="Event state"
-        android:textColor="@color/white"
         android:background="@drawable/bg_event_state"
-        tools:ignore="MissingConstraints"
+        android:paddingHorizontal="@dimen/layout_spacing_4x"
+        android:text="@string/activity_events_card_layout_next_event"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_13x"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
 
     <TextView
         android:id="@+id/date_and_place_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        tools:text="@string/activity_events_card_layout_date_time"
+        android:textColor="@color/events_card_layout_text_color"
+        android:textSize="@dimen/text_size_14x"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/event_state"
-        android:textColor="#888B94"
-        android:text="saassaassa"
-        android:textSize="14dp"
         />
 
     <ImageView
+        android:id="@+id/event_favorite_icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_favorite_border"
+        app:layout_constraintBottom_toBottomOf="@id/date_and_place_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/date_and_place_text"
-        app:layout_constraintBottom_toBottomOf="@id/date_and_place_text"
         />
+
     <TextView
         android:id="@+id/event_speaker_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/date_and_place_text"
-        android:text="Speaker name"
-        android:textColor="#1C1819"
-        android:textSize="14dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/layout_spacing_8x"
+        tools:text="@string/activity_events_card_layout_speaker_name"
+        android:textColor="@color/text_view_text_color"
+        android:textSize="@dimen/text_size_14x"
         android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/date_and_place_text"
         />
 
     <TextView
         android:id="@+id/event_company_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_spacing_8x"
+        android:ellipsize="end"
+        android:maxLines="1"
+        tools:text="@string/activity_events_card_layout_speaker_company_name"
+        android:textColor="@color/events_card_layout_text_color"
+        android:textSize="@dimen/text_size_13x"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/event_speaker_name"
-        android:textColor="#888B94"
-        android:text="speaker company"
-        android:textSize="13dp"
-        android:layout_marginTop="8dp"
-
         />
 
     <TextView
         android:id="@+id/event_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/layout_spacing_8x"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:minLines="3"
+        tools:text="@string/activity_events_card_layout_event_title"
+        android:textColor="@color/text_view_text_color"
+        android:textSize="@dimen/text_size_14x"
         app:layout_constraintTop_toBottomOf="@id/event_company_name"
-        android:text="Speaker Event title"
-        android:textColor="#1C1819"
-        android:textSize="14dp"
-        android:layout_marginTop="8dp"
-
         />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

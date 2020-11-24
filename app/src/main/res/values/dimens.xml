@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <!--    margin & padding-->
-    <dimen name="layout_spacing_16x">16dp</dimen>
+    <dimen name="layout_spacing_4x">4dp</dimen>
+    <dimen name="layout_spacing_8x">8dp</dimen>
     <dimen name="layout_spacing_10x">10dp</dimen>
+    <dimen name="layout_spacing_16x">16dp</dimen>
     <dimen name="layout_spacing_40x">40dp</dimen>
+    <dimen name="layout_spacing_95x">95dp</dimen>
 <!--    text size-->
+    <dimen name="text_size_13x">13sp</dimen>
+    <dimen name="text_size_14x">14sp</dimen>
     <dimen name="text_size_16x">16sp</dimen>
     <dimen name="text_size_24x">24sp</dimen>
 <!--    shapes-->
-    <dimen name="radius_3x">3dp</dimen>
     <dimen name="stroke_1x">1dp</dimen>
-<!--    Button-->
+    <dimen name="radius_3x">3dp</dimen>
+    <dimen name="radius_45x">45dp</dimen>
+    <!--    Button-->
     <dimen name="activity_upcoming_events_button_width">160dp</dimen>
+    <dimen name="activity_upcoming_events_progress_bar_size">120dp</dimen>
+    <dimen name="activity_upcoming_events_button_favorite_width">154dp</dimen>
+    <dimen name="activity_upcoming_events_button_favorite_height">44dp</dimen>
 <!--    layout params-->
+    <dimen name="activity_branch_item_ic_favorite">32dp</dimen>
     <dimen name="activity_hello_layout_height">173dp</dimen>
+    <dimen name="activity_branch_item_width">280dp</dimen>
 </resources>

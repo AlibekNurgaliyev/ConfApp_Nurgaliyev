@@ -19,4 +19,10 @@
     <color name="activity_upcoming_events_text_color_sync_load">#2196F3</color>
     <color name="activity_upcoming_events_text_color_async_load">#4CAF50</color>
     <color name="activity_upcoming_events_text_color_error">#F44336</color>
+<!--    events_card_layout-->
+    <color name="events_card_layout_text_color">#888B94</color>
+    <color name="events_card_state_color">#2A81DD</color>
+
+
+
 </resources>
