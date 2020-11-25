@@ -32,7 +32,7 @@ val apiRetrofit: Retrofit =
 
 val apiClient = apiRetrofit.create(ApiClient::class.java)
 
-class UpcomingEventsActivity : AppCompatActivity(){
+class UpcomingEventsActivity : AppCompatActivity() {
     private lateinit var errorDataLoadText: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView

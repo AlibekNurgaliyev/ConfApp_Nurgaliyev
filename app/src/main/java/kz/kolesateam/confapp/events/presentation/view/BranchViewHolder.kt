@@ -1,19 +1,19 @@
 package kz.kolesateam.confapp.events.presentation.view
 
 import android.view.View
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
 
+
 class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
     private val branchNextEvent: View = itemView.findViewById(R.id.branch_next_event)
     private val branchTitle: TextView = itemView.findViewById(R.id.branch_title)
+    private val branchItemScrollView: HorizontalScrollView =
+        itemView.findViewById(R.id.branch_item_scroll_view)
     private val branchTitleAndArrow: LinearLayout =
         itemView.findViewById(R.id.branch_title_and_arrow_layout)
     private val iconFavoriteCurrent: ImageView =
@@ -85,7 +85,6 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 }
             }
         }
-
         iconFavoriteNext.setOnClickListener {
             isIconFavoriteClicked = when (isIconFavoriteClicked) {
                 true -> {
@@ -96,6 +95,20 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     iconFavoriteNext.setImageResource(R.drawable.ic_favorite_solid)
                     true
                 }
+            }
+        }
+        branchItemScrollView.onScroll()
+    }
+
+    private fun HorizontalScrollView.onScroll() {
+        branchItemScrollView.viewTreeObserver?.addOnScrollChangedListener {
+            if (scrollX >= maxScrollAmount*0.9) {
+                branchNextEvent.setBackgroundResource(R.drawable.bg_events_card_active)
+                branchCurrentEvent.setBackgroundResource(R.drawable.bg_events_card_shadowed)
+            }
+            if (scrollX == 0) {
+                branchNextEvent.setBackgroundResource(R.drawable.bg_events_card_shadowed)
+                branchCurrentEvent.setBackgroundResource(R.drawable.bg_events_card_active)
             }
         }
     }
