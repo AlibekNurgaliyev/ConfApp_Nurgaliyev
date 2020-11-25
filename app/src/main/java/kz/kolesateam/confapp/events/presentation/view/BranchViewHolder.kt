@@ -14,9 +14,12 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
     private val branchNextEvent: View = itemView.findViewById(R.id.branch_next_event)
     private val branchTitle: TextView = itemView.findViewById(R.id.branch_title)
-    private val branchTitleAndArrow : LinearLayout = itemView.findViewById(R.id.branch_title_and_arrow_layout)
-    private val iconFavoriteCurrent: ImageView = branchCurrentEvent.findViewById(R.id.event_favorite_icon)
+    private val branchTitleAndArrow: LinearLayout =
+        itemView.findViewById(R.id.branch_title_and_arrow_layout)
+    private val iconFavoriteCurrent: ImageView =
+        branchCurrentEvent.findViewById(R.id.event_favorite_icon)
     private val iconFavoriteNext: ImageView = branchNextEvent.findViewById(R.id.event_favorite_icon)
+    private var isIconFavoriteClicked: Boolean = false
 
     private val eventDateAndPlaceCurrent: TextView =
         branchCurrentEvent.findViewById(R.id.date_and_place_text)
@@ -61,7 +64,7 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         speakerCompanyNext.text = nextEvent.speaker?.job
         eventTitleNext.text = nextEvent.title
 
-        branchTitleAndArrow.setOnClickListener{
+        branchTitleAndArrow.setOnClickListener {
             Toast.makeText(itemView.context, branchTitle.text, Toast.LENGTH_SHORT).show()
         }
         branchCurrentEvent.setOnClickListener {
@@ -71,10 +74,29 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             Toast.makeText(itemView.context, eventTitleNext.text, Toast.LENGTH_SHORT).show()
         }
         iconFavoriteCurrent.setOnClickListener {
-            iconFavoriteCurrent.setImageResource(R.drawable.ic_favorite_solid)
+            isIconFavoriteClicked = when (isIconFavoriteClicked) {
+                true -> {
+                    iconFavoriteCurrent.setImageResource(R.drawable.ic_favorite_border)
+                    false
+                }
+                false -> {
+                    iconFavoriteCurrent.setImageResource(R.drawable.ic_favorite_solid)
+                    true
+                }
+            }
         }
+
         iconFavoriteNext.setOnClickListener {
-            iconFavoriteNext.setImageResource(R.drawable.ic_favorite_solid)
+            isIconFavoriteClicked = when (isIconFavoriteClicked) {
+                true -> {
+                    iconFavoriteNext.setImageResource(R.drawable.ic_favorite_border)
+                    false
+                }
+                false -> {
+                    iconFavoriteNext.setImageResource(R.drawable.ic_favorite_solid)
+                    true
+                }
+            }
         }
     }
 }
