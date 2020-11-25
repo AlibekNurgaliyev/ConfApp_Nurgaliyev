@@ -6,10 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
-import kz.kolesateam.confapp.events.data.models.UpcomingEvenetsListItem
+import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 
 class BranchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    private val dataList: MutableList<UpcomingEvenetsListItem> = mutableListOf()
+    private val dataList: MutableList<UpcomingEventsListItem> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -36,7 +36,7 @@ class BranchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return dataList[position].type
     }
 
-    fun setList(branchApiDataList: List<UpcomingEvenetsListItem>) {
+    fun setList(branchApiDataList: List<UpcomingEventsListItem>) {
         dataList.clear()
         dataList.addAll(branchApiDataList)
         notifyDataSetChanged()

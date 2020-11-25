@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginTop="@dimen/text_size_14x"
+    android:layout_marginTop="@dimen/layout_spacing_14x"
     android:background="@color/white"
     android:paddingHorizontal="@dimen/layout_spacing_16x"
     android:paddingTop="@dimen/layout_spacing_4x"

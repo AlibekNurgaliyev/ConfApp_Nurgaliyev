@@ -1,7 +1,10 @@
 package kz.kolesateam.confapp.events.presentation.view
 
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.BranchApiData
@@ -11,6 +14,9 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
     private val branchNextEvent: View = itemView.findViewById(R.id.branch_next_event)
     private val branchTitle: TextView = itemView.findViewById(R.id.branch_title)
+    private val branchTitleAndArrow : LinearLayout = itemView.findViewById(R.id.branch_title_and_arrow_layout)
+    private val iconFavoriteCurrent: ImageView = branchCurrentEvent.findViewById(R.id.event_favorite_icon)
+    private val iconFavoriteNext: ImageView = branchNextEvent.findViewById(R.id.event_favorite_icon)
 
     private val eventDateAndPlaceCurrent: TextView =
         branchCurrentEvent.findViewById(R.id.date_and_place_text)
@@ -40,21 +46,35 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             currentEvent.endTime,
             currentEvent.place
         )
-
         eventDateAndPlaceCurrent.text = currentEventDateAndPlaceText
         speakerNameCurrent.text = currentEvent.speaker?.fullName ?: "noname"
         speakerCompanyCurrent.text = currentEvent.speaker?.job
         eventTitleCurrent.text = currentEvent.title
 
-        val NextEventDateAndPlaceText: String = "%s - %s • %s".format(
+        val nextEventDateAndPlaceText: String = "%s - %s • %s".format(
             nextEvent.startTime,
             nextEvent.endTime,
             nextEvent.place
         )
-
-        eventDateAndPlaceNext.text = NextEventDateAndPlaceText
+        eventDateAndPlaceNext.text = nextEventDateAndPlaceText
         speakerNameNext.text = nextEvent.speaker?.fullName ?: "noname"
         speakerCompanyNext.text = nextEvent.speaker?.job
         eventTitleNext.text = nextEvent.title
+
+        branchTitleAndArrow.setOnClickListener{
+            Toast.makeText(itemView.context, branchTitle.text, Toast.LENGTH_SHORT).show()
+        }
+        branchCurrentEvent.setOnClickListener {
+            Toast.makeText(itemView.context, eventTitleCurrent.text, Toast.LENGTH_SHORT).show()
+        }
+        branchNextEvent.setOnClickListener {
+            Toast.makeText(itemView.context, eventTitleNext.text, Toast.LENGTH_SHORT).show()
+        }
+        iconFavoriteCurrent.setOnClickListener {
+            iconFavoriteCurrent.setImageResource(R.drawable.ic_favorite_solid)
+        }
+        iconFavoriteNext.setOnClickListener {
+            iconFavoriteNext.setImageResource(R.drawable.ic_favorite_solid)
+        }
     }
 }

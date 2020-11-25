@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.models.BranchApiData
-import kz.kolesateam.confapp.events.data.models.UpcomingEvenetsListItem
+import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.hello.presentation.APPLICATION_SHARED_PREFERENCES
 import kz.kolesateam.confapp.hello.presentation.USER_NAME_KEY
@@ -32,7 +32,7 @@ val apiRetrofit: Retrofit =
 
 val apiClient = apiRetrofit.create(ApiClient::class.java)
 
-class UpcomingEventsActivity : AppCompatActivity() {
+class UpcomingEventsActivity : AppCompatActivity(){
     private lateinit var errorDataLoadText: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
@@ -49,8 +49,8 @@ class UpcomingEventsActivity : AppCompatActivity() {
         errorDataLoadText = findViewById(R.id.activity_upcoming_events_data_load_failed)
         progressBar = findViewById(R.id.activity_upcoming_events_progress_bar)
         recyclerView = findViewById(R.id.activity_upcoming_events_recycler_view)
-
         recyclerView.adapter = branchAdapter
+
         recyclerView.layoutManager = LinearLayoutManager(
             this,
             LinearLayoutManager.VERTICAL,
@@ -65,16 +65,16 @@ class UpcomingEventsActivity : AppCompatActivity() {
                                     response: Response<List<BranchApiData>>) {
                 progressBar.hide()
                 if (response.isSuccessful) {
-                    val upcomingEventsListItemList: MutableList<UpcomingEvenetsListItem> =
+                    val upcomingEventsListItemList: MutableList<UpcomingEventsListItem> =
                         mutableListOf()
-                    val headerListItem: UpcomingEvenetsListItem = UpcomingEvenetsListItem(
+                    val headerListItem: UpcomingEventsListItem = UpcomingEventsListItem(
                         type = 1,
                         data = String.format(resources.getString(R.string.activity_upcoming_events_shared_prefs_name),
                             getSavedUserName())
                     )
-                    val branchListItemList: List<UpcomingEvenetsListItem> =
+                    val branchListItemList: List<UpcomingEventsListItem> =
                         response.body()!!.map { branchApiData ->
-                            UpcomingEvenetsListItem(
+                            UpcomingEventsListItem(
                                 type = 2,
                                 data = branchApiData
                             )
