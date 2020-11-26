@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -36,6 +37,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
     private lateinit var errorDataLoadText: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
+    private lateinit var favoriteButton : Button
     private val branchAdapter: BranchAdapter = BranchAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +51,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
         errorDataLoadText = findViewById(R.id.activity_upcoming_events_data_load_failed)
         progressBar = findViewById(R.id.activity_upcoming_events_progress_bar)
         recyclerView = findViewById(R.id.activity_upcoming_events_recycler_view)
+        favoriteButton = findViewById(R.id.activity_upcoming_events_button_favorite)
         recyclerView.adapter = branchAdapter
 
         recyclerView.layoutManager = LinearLayoutManager(
@@ -87,6 +90,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<List<BranchApiData>>, t: Throwable) {
                 progressBar.hide()
+                favoriteButton.hide()
                 errorDataLoadText.show()
                 setTextAndTextColor(
                     errorDataLoadText,

@@ -19,7 +19,7 @@
     <dimen name="radius_45x">45dp</dimen>
     <!--    Button-->
     <dimen name="activity_upcoming_events_button_width">160dp</dimen>
-    <dimen name="activity_upcoming_events_progress_bar_size">120dp</dimen>
+    <dimen name="activity_upcoming_events_progress_bar_size">160dp</dimen>
     <dimen name="activity_upcoming_events_button_favorite_width">154dp</dimen>
     <dimen name="activity_upcoming_events_button_favorite_height">44dp</dimen>
 <!--    layout params-->

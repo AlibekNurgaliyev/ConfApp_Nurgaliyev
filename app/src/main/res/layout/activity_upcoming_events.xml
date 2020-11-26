@@ -27,7 +27,7 @@
         android:layout_width="@dimen/activity_upcoming_events_progress_bar_size"
         android:layout_height="@dimen/activity_upcoming_events_progress_bar_size"
         android:layout_gravity="center"
-        android:indeterminateDrawable="@drawable/spinner_png"
+        android:indeterminateDrawable="@drawable/progress_bar"
         android:padding="@dimen/layout_spacing_10x"
         android:visibility="gone"
         />
@@ -43,6 +43,7 @@
         />
 
     <Button
+        android:id="@+id/activity_upcoming_events_button_favorite"
         android:layout_width="@dimen/activity_upcoming_events_button_favorite_width"
         android:layout_height="@dimen/activity_upcoming_events_button_favorite_height"
         android:layout_gravity="center_horizontal|bottom"
