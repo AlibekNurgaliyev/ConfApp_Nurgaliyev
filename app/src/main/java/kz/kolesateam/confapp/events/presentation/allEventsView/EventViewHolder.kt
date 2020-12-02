@@ -8,6 +8,7 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.iconFavoriteClick
 import kz.kolesateam.confapp.events.presentation.showShortToastMessage
+import kz.kolesateam.confapp.events.presentation.view.DATE_AND_PLACE_FORMAT
 
 class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -22,8 +23,12 @@ class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private var isIconFavoriteClicked: Boolean = false
 
+    init {
+        view.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
+    }
+
     fun bind(eventApiData: EventApiData) {
-        val eventDateAndPlaceText: String = "%s - %s • %s".format(
+        val eventDateAndPlaceText: String = DATE_AND_PLACE_FORMAT.format(
             eventApiData.startTime,
             eventApiData.endTime,
             eventApiData.place

@@ -17,21 +17,18 @@
         >
 
         <ImageView
+            android:id="@+id/activity_all_events_screen_arrow_back"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:src="@drawable/ic_arrow_back"
-            app:layout_constraintBottom_toBottomOf="@+id/activity_all_events_screen_kolesa_logo"
-            app:layout_constraintTop_toTopOf="@+id/activity_all_events_screen_kolesa_logo"
             />
 
         <ImageView
             android:layout_weight="1"
             android:id="@+id/activity_all_events_screen_kolesa_logo"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="24dp"
             android:src="@drawable/logo_kolesa_white"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             />
 
     </LinearLayout>
@@ -43,7 +40,7 @@
         android:background="@drawable/bg"
         android:clipToPadding="false"
         android:orientation="vertical"
-        android:paddingTop="@dimen/layout_spacing_40x"
+        android:layout_marginTop="@dimen/layout_spacing_40x"
         android:paddingBottom="@dimen/layout_spacing_95x"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="5"
@@ -83,4 +80,5 @@
         android:textAllCaps="false"
         android:textColor="@color/events_card_state_color"
         />
+
 </FrameLayout>

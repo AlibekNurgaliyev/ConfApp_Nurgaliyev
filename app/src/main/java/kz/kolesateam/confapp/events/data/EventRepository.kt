@@ -17,9 +17,10 @@ class EventRepository (){
 
     private val apiClient: ApiClient = ApiClient.create()
 
-    fun getEvents(): ResponseData<List<EventApiData>, String> {
+    fun getEvents(branchIdName:String): ResponseData<List<EventApiData>, String> {
         return try {
-            val response: Response<List<EventApiData>> = apiClient.getEvents().execute()
+
+            val response: Response<List<EventApiData>> = apiClient.getEvents(branchIdName).execute()
 
             if (response.isSuccessful) {
                 ResponseData.Success(response.body()!!)

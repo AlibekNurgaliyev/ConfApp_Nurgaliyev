@@ -1,5 +1,7 @@
 package kz.kolesateam.confapp.events.presentation
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +14,12 @@ import kz.kolesateam.confapp.events.data.ApiClient
 import kz.kolesateam.confapp.events.data.EventRepository
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.presentation.view.BRANCH_ID
 import kz.kolesateam.confapp.events.presentation.view.BranchViewHolder
+import kz.kolesateam.confapp.events.presentation.view.VIEW_HOLDER_SHARED_PREFERENCES
 import kz.kolesateam.confapp.events.utils.model.ResponseData
+import kz.kolesateam.confapp.hello.presentation.APPLICATION_SHARED_PREFERENCES
+import kz.kolesateam.confapp.hello.presentation.USER_NAME_KEY
 
 class AllEventsScreenActivity : AppCompatActivity() {
 
@@ -21,6 +27,8 @@ class AllEventsScreenActivity : AppCompatActivity() {
 
     private val eventsRepository: EventRepository = EventRepository()
     private val allEventsScreenAdapter: AllEventsScreenAdapter = AllEventsScreenAdapter()
+
+//    private var savedId = getSavedUserName()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +45,8 @@ class AllEventsScreenActivity : AppCompatActivity() {
     private fun loadEvents() {
         GlobalScope.launch(Dispatchers.Main) {
             val response: ResponseData<List<EventApiData>, String> = withContext(Dispatchers.IO) {
-                eventsRepository.getEvents()
+                val ssa = getSavedUserName()
+                eventsRepository.getEvents(getSavedUserName())
             }
             when (response) {
                 is ResponseData.Success -> showResult(response.result)
@@ -51,5 +60,14 @@ class AllEventsScreenActivity : AppCompatActivity() {
     }
 
     private fun showError(error: String) {
+    }
+
+    private fun getSavedUserName(): String {
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences(
+                VIEW_HOLDER_SHARED_PREFERENCES,
+                Context.MODE_PRIVATE
+            )
+        return sharedPreferences.getString(BRANCH_ID, "Default Text") ?: "Default Text"
     }
 }

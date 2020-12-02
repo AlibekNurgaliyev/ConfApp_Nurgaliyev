@@ -5,20 +5,15 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.view.View
 import android.widget.*
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.ApiClient
-
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.*
-import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
 
 const val BRANCH_ID = "branch_id"
 const val VIEW_HOLDER_SHARED_PREFERENCES = "view_holder_application"
-private const val BASE_EVENT_URL = "http://37.143.8.68:2020/branch_events/"
+const val DATE_AND_PLACE_FORMAT = "%s - %s • %s"
 
 class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
@@ -59,10 +54,11 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     fun onBind(branchApiData: BranchApiData) {
         branchTitle.text = branchApiData.title
+
         val currentEvent: EventApiData = branchApiData.events.first()
         val nextEvent: EventApiData = branchApiData.events.last()
 
-        val currentEventDateAndPlaceText: String = "%s - %s • %s".format(
+        val currentEventDateAndPlaceText: String = DATE_AND_PLACE_FORMAT.format(
             currentEvent.startTime,
             currentEvent.endTime,
             currentEvent.place
@@ -72,26 +68,30 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         speakerCompanyCurrent.text = currentEvent.speaker?.job
         eventTitleCurrent.text = currentEvent.title
 
-        val nextEventDateAndPlaceText: String = "%s - %s • %s".format(
+        val nextEventDateAndPlaceText: String = DATE_AND_PLACE_FORMAT.format(
             nextEvent.startTime,
             nextEvent.endTime,
             nextEvent.place
         )
+
         eventDateAndPlaceNext.text = nextEventDateAndPlaceText
         speakerNameNext.text = nextEvent.speaker?.fullName ?: "noname"
         speakerCompanyNext.text = nextEvent.speaker?.job
         eventTitleNext.text = nextEvent.title
 
         branchTitleAndArrow.setOnClickListener {
+            saveName((branchApiData.id!!).toString())
             navigateToAllEventsScreenActivity()
         }
-        branchCurrentEvent.setOnClickListener {
 
+        branchCurrentEvent.setOnClickListener {
             showShortToastMessage(itemView.context, eventTitleCurrent.text)
         }
+
         branchNextEvent.setOnClickListener {
             showShortToastMessage(itemView.context, eventTitleNext.text)
         }
+
         iconFavoriteCurrent.setOnClickListener {
             isIconFavoriteClicked = iconFavoriteClick(isIconFavoriteClicked, iconFavoriteCurrent)
         }
@@ -118,5 +118,16 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 branchCurrentEvent.setBackgroundResource(R.drawable.bg_events_card_active)
             }
         }
+    }
+
+    private fun saveName(branchId: String) {
+        val sharedPreferences: SharedPreferences =
+            itemView.context.getSharedPreferences(
+                VIEW_HOLDER_SHARED_PREFERENCES,
+                Context.MODE_PRIVATE
+            )
+        val editor: SharedPreferences.Editor = sharedPreferences.edit()
+        editor.putString(BRANCH_ID, branchId)
+        editor.apply()
     }
 }

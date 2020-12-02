@@ -16,18 +16,17 @@ interface ApiClient {
     @GET("/upcoming_events")
     fun getUpcomingEvents(): Call<List<BranchApiData>>
 
-//    @GET("/branch_events/{branch_id}")
-    @GET("/branch_events/0")
+    @GET("/branch_events/{branch_id}")
+//    @GET("/branch_events/0")
 
-//    fun getEvents(@Path(value = "branchId") branchId:String): Call<List<EventApiData>>
-    fun getEvents(): Call<List<EventApiData>>
+    fun getEvents(@Path(value = "branch_id") branchId:String): Call<List<EventApiData>>
+//    fun getEvents(): Call<List<EventApiData>>
     companion object RetrofitClient {
         fun create(): ApiClient {
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_EVENT_URL)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build()
-
             return retrofit.create(ApiClient::class.java)
         }
     }
