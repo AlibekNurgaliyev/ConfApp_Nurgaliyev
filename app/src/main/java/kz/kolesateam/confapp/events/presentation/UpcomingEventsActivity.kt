@@ -109,12 +109,4 @@ class UpcomingEventsActivity : AppCompatActivity() {
             )
         return sharedPreferences.getString(USER_NAME_KEY, "Default Text") ?: "Default Text"
     }
-
-    private fun View.show() {
-        visibility = View.VISIBLE
-    }
-
-    private fun View.hide() {
-        visibility = View.GONE
-    }
 }

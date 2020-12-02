@@ -6,6 +6,8 @@
     <dimen name="layout_spacing_10x">10dp</dimen>
     <dimen name="layout_spacing_14x">14dp</dimen>
     <dimen name="layout_spacing_16x">16dp</dimen>
+    <dimen name="layout_spacing_24x">24dp</dimen>
+    <dimen name="layout_spacing_32x">32dp</dimen>
     <dimen name="layout_spacing_40x">40dp</dimen>
     <dimen name="layout_spacing_95x">95dp</dimen>
 <!--    text size-->

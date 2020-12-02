@@ -2,6 +2,7 @@ package kz.kolesateam.confapp.events.presentation
 
 import android.app.Activity
 import android.content.Context
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -26,4 +27,12 @@ fun iconFavoriteClick(isIconFavoriteClicked: Boolean, iconFavorite: ImageView): 
         return true
     }
 
+}
+
+fun View.show() {
+    visibility = View.VISIBLE
+}
+
+fun View.hide() {
+    visibility = View.GONE
 }

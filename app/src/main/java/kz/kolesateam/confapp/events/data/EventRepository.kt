@@ -13,11 +13,11 @@ import kz.kolesateam.confapp.hello.presentation.USER_NAME_KEY
 import retrofit2.Response
 import java.lang.Exception
 
-class EventRepository (){
+class EventRepository() {
 
     private val apiClient: ApiClient = ApiClient.create()
 
-    fun getEvents(branchIdName:String): ResponseData<List<EventApiData>, String> {
+    fun getEvents(branchIdName: String): ResponseData<List<EventApiData>, String> {
         return try {
 
             val response: Response<List<EventApiData>> = apiClient.getEvents(branchIdName).execute()
