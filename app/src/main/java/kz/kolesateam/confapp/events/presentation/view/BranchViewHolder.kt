@@ -1,14 +1,24 @@
 package kz.kolesateam.confapp.events.presentation.view
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.view.View
 import android.widget.*
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.events.data.ApiClient
+
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.presentation.iconFavoriteClick
-import kz.kolesateam.confapp.events.presentation.showShortToastMessage
+import kz.kolesateam.confapp.events.presentation.*
+import retrofit2.Retrofit
+import retrofit2.converter.jackson.JacksonConverterFactory
 
+const val BRANCH_ID = "branch_id"
+const val VIEW_HOLDER_SHARED_PREFERENCES = "view_holder_application"
+private const val BASE_EVENT_URL = "http://37.143.8.68:2020/branch_events/"
 
 class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
@@ -73,10 +83,10 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         eventTitleNext.text = nextEvent.title
 
         branchTitleAndArrow.setOnClickListener {
-            showShortToastMessage(itemView.context, branchTitle.text)
-
+            navigateToAllEventsScreenActivity()
         }
         branchCurrentEvent.setOnClickListener {
+
             showShortToastMessage(itemView.context, eventTitleCurrent.text)
         }
         branchNextEvent.setOnClickListener {
@@ -90,6 +100,11 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             isIconFavoriteClicked = iconFavoriteClick(isIconFavoriteClicked, iconFavoriteNext)
         }
         branchItemScrollView.onScroll()
+    }
+
+    private fun navigateToAllEventsScreenActivity() {
+        val intent = Intent(itemView.context, AllEventsScreenActivity::class.java)
+        itemView.context.startActivity(intent)
     }
 
     private fun HorizontalScrollView.onScroll() {

@@ -25,4 +25,5 @@ fun iconFavoriteClick(isIconFavoriteClicked: Boolean, iconFavorite: ImageView): 
         iconFavorite.setImageResource(R.drawable.ic_favorite_solid)
         return true
     }
+
 }
