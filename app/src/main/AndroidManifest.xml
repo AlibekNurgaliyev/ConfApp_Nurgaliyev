@@ -16,7 +16,6 @@
         android:usesCleartextTraffic="true"
         >
         <activity android:name=".events.presentation.UpcomingEventsActivity"/>
-        <activity android:name=".hello.presentation.TestHelloActivity"/>
 
         <activity
             android:name=".hello.presentation.HelloActivity"
