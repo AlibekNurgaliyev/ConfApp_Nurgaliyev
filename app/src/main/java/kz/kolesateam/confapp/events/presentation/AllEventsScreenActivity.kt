@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.Dispatchers
@@ -17,8 +18,10 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.EventRepository
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.view.BRANCH_ID
+import kz.kolesateam.confapp.events.presentation.view.TITLE_NAME
 import kz.kolesateam.confapp.events.presentation.view.VIEW_HOLDER_SHARED_PREFERENCES
 import kz.kolesateam.confapp.events.utils.model.ResponseData
+import org.w3c.dom.Text
 
 class AllEventsScreenActivity : AppCompatActivity() {
 
@@ -26,6 +29,7 @@ class AllEventsScreenActivity : AppCompatActivity() {
     private lateinit var activityAllEventsScreenArrowBack: ImageView
     private lateinit var activityAllEventsScreenFavoriteButton: Button
     private lateinit var progressBar: ProgressBar
+    private lateinit var activityAllEventsScreenEventName: TextView
 
     private val eventsRepository: EventRepository = EventRepository()
     private val allEventsScreenAdapter: AllEventsScreenAdapter = AllEventsScreenAdapter()
@@ -41,6 +45,7 @@ class AllEventsScreenActivity : AppCompatActivity() {
         recyclerViewAllEvents = findViewById(R.id.activity_all_events_screen_recycler_view)
         progressBar = findViewById(R.id.activity_all_events_screen_progress_bar)
         activityAllEventsScreenArrowBack = findViewById(R.id.activity_all_events_screen_arrow_back)
+        activityAllEventsScreenEventName = findViewById(R.id.activity_all_events_screen_event_name)
         activityAllEventsScreenFavoriteButton =
             findViewById(R.id.activity_all_events_screen_button_favorite)
         recyclerViewAllEvents.adapter = allEventsScreenAdapter
@@ -51,6 +56,8 @@ class AllEventsScreenActivity : AppCompatActivity() {
         activityAllEventsScreenFavoriteButton.setOnClickListener {
             showShortToastMessage(this, "Favorites")
         }
+        activityAllEventsScreenEventName.text = getSavedEventName()
+
     }
 
     private fun loadEvents() {
@@ -86,6 +93,15 @@ class AllEventsScreenActivity : AppCompatActivity() {
                 Context.MODE_PRIVATE
             )
         return sharedPreferences.getString(BRANCH_ID, "Default Text") ?: "Default Text"
+    }
+
+    private fun getSavedEventName(): String {
+        val sharedPreferences: SharedPreferences =
+            getSharedPreferences(
+                VIEW_HOLDER_SHARED_PREFERENCES,
+                Context.MODE_PRIVATE
+            )
+        return sharedPreferences.getString(TITLE_NAME, "Default Text") ?: "Default Text"
     }
 
     private fun navigateUpcomingEvents() {
