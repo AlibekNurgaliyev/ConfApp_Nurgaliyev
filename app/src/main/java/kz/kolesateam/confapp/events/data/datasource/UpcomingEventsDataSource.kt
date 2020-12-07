@@ -1,8 +1,7 @@
-package kz.kolesateam.confapp.events.data
+package kz.kolesateam.confapp.events.data.datasource
 
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.presentation.view.BranchViewHolder
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
@@ -11,7 +10,7 @@ import retrofit2.http.Path
 
 private const val BASE_EVENT_URL = "http://37.143.8.68:2020/"
 
-interface ApiClient {
+interface UpcomingEventsDataSource {
 
     @GET("/upcoming_events")
     fun getUpcomingEvents(): Call<List<BranchApiData>>
@@ -22,12 +21,12 @@ interface ApiClient {
     fun getEvents(@Path(value = "branch_id") branchId:String): Call<List<EventApiData>>
 //    fun getEvents(): Call<List<EventApiData>>
     companion object RetrofitClient {
-        fun create(): ApiClient {
+        fun create(): UpcomingEventsDataSource {
             val retrofit = Retrofit.Builder()
                 .baseUrl(BASE_EVENT_URL)
                 .addConverterFactory(JacksonConverterFactory.create())
                 .build()
-            return retrofit.create(ApiClient::class.java)
+            return retrofit.create(UpcomingEventsDataSource::class.java)
         }
     }
 }

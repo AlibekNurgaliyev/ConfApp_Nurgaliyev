@@ -3,7 +3,6 @@ package kz.kolesateam.confapp.events.presentation
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
@@ -11,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.ApiClient
+import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
@@ -31,7 +30,7 @@ val apiRetrofit: Retrofit =
         .addConverterFactory(JacksonConverterFactory.create())
         .build()
 
-val apiClient = apiRetrofit.create(ApiClient::class.java)
+val apiClient = apiRetrofit.create(UpcomingEventsDataSource::class.java)
 
 class UpcomingEventsActivity : AppCompatActivity() {
     private lateinit var errorDataLoadText: TextView
