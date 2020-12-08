@@ -1,19 +1,19 @@
 package kz.kolesateam.confapp.events.presentation.view
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.view.View
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.alleventsscreen.AllEventsScreenActivity
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.presentation.*
+import kz.kolesateam.confapp.iconFavoriteClick
+import kz.kolesateam.confapp.sharedPreferencesSaveData
+import kz.kolesateam.confapp.showShortToastMessage
 
 const val BRANCH_ID = "branch_id"
 const val TITLE_NAME = "title_name"
-const val VIEW_HOLDER_SHARED_PREFERENCES = "view_holder_application"
 const val DATE_AND_PLACE_FORMAT = "%s - %s • %s"
 
 class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -81,9 +81,8 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         eventTitleNext.text = nextEvent.title
 
         branchTitleAndArrow.setOnClickListener {
-            saveName((branchApiData.id!!).toString())
-            //saveName(branchApiData.title.toString())
-            saveEventName(branchApiData.title!!)
+            sharedPreferencesSaveData(itemView.context,branchApiData.id!!.toString(), BRANCH_ID)
+            sharedPreferencesSaveData(itemView.context,branchApiData.title!!, TITLE_NAME)
             navigateToAllEventsScreenActivity()
         }
 
@@ -121,27 +120,5 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 branchCurrentEvent.setBackgroundResource(R.drawable.bg_events_card_active)
             }
         }
-    }
-
-    private fun saveName(branchId: String) {
-        val sharedPreferences: SharedPreferences =
-            itemView.context.getSharedPreferences(
-                VIEW_HOLDER_SHARED_PREFERENCES,
-                Context.MODE_PRIVATE
-            )
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        editor.putString(BRANCH_ID, branchId)
-        editor.apply()
-    }
-
-    private fun saveEventName(branchId: String) {
-        val sharedPreferences: SharedPreferences =
-            itemView.context.getSharedPreferences(
-                VIEW_HOLDER_SHARED_PREFERENCES,
-                Context.MODE_PRIVATE
-            )
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        editor.putString(TITLE_NAME, branchId)
-        editor.apply()
     }
 }

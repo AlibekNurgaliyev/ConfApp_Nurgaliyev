@@ -1,7 +1,5 @@
 package kz.kolesateam.confapp.events.presentation
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ProgressBar
@@ -9,12 +7,11 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.*
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
-import kz.kolesateam.confapp.hello.presentation.APPLICATION_SHARED_PREFERENCES
 import kz.kolesateam.confapp.hello.presentation.USER_NAME_KEY
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,7 +33,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
     private lateinit var errorDataLoadText: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
-    private lateinit var favoriteButton : Button
+    private lateinit var favoriteButton: Button
     private val branchAdapter: BranchAdapter = BranchAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,10 +66,11 @@ class UpcomingEventsActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val upcomingEventsListItemList: MutableList<UpcomingEventsListItem> =
                         mutableListOf()
-                    val headerListItem: UpcomingEventsListItem = UpcomingEventsListItem(
+                    val headerListItem = UpcomingEventsListItem(
                         type = 1,
                         data = String.format(resources.getString(R.string.activity_upcoming_events_shared_prefs_name),
-                            getSavedUserName())
+                            sharedPreferencesLoadData(this@UpcomingEventsActivity, USER_NAME_KEY)
+                        )
                     )
                     val branchListItemList: List<UpcomingEventsListItem> =
                         response.body()!!.map { branchApiData ->
@@ -98,14 +96,5 @@ class UpcomingEventsActivity : AppCompatActivity() {
                     R.color.activity_upcoming_events_text_color_error)
             }
         })
-    }
-
-    private fun getSavedUserName(): String {
-        val sharedPreferences: SharedPreferences =
-            getSharedPreferences(
-                APPLICATION_SHARED_PREFERENCES,
-                Context.MODE_PRIVATE
-            )
-        return sharedPreferences.getString(USER_NAME_KEY, "Default Text") ?: "Default Text"
     }
 }

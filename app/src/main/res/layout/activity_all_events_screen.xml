@@ -35,7 +35,9 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/layout_spacing_40x"
+        android:layout_marginBottom="@dimen/layout_spacing_24x"
         android:orientation="vertical"
         >
 
@@ -43,7 +45,8 @@
             android:id="@+id/activity_all_events_screen_event_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/layout_spacing_8x"
+            android:layout_marginTop="@dimen/layout_spacing_8x"
+            android:layout_marginBottom="@dimen/layout_spacing_8x"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="@dimen/text_size_24x"

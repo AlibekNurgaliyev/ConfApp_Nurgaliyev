@@ -1,8 +1,6 @@
 package kz.kolesateam.confapp.hello.presentation
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -11,10 +9,10 @@ import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
+import kz.kolesateam.confapp.sharedPreferencesSaveData
 
 const val USER_NAME_KEY = "user_name"
 const val APPLICATION_SHARED_PREFERENCES = "application"
-private const val BASE_URL = "http://37.143.8.68:2020/"
 
 class HelloActivity : AppCompatActivity() {
 
@@ -29,20 +27,9 @@ class HelloActivity : AppCompatActivity() {
         val nameEditText: EditText = findViewById(R.id.edit_text_name)
         nameEditText.addTextChangedListener(textWatcher)
         continueButton.setOnClickListener {
-            saveName(nameEditText.text.toString())
+            sharedPreferencesSaveData(this, nameEditText.text.toString(), USER_NAME_KEY)
             navigateToTestHelloActivity()
         }
-    }
-
-    private fun saveName(userName: String) {
-        val sharedPreferences: SharedPreferences =
-            getSharedPreferences(
-                APPLICATION_SHARED_PREFERENCES,
-                Context.MODE_PRIVATE
-            )
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        editor.putString(USER_NAME_KEY, userName)
-        editor.apply()
     }
 
     private fun navigateToTestHelloActivity() {

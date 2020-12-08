@@ -1,14 +1,13 @@
-package kz.kolesateam.confapp.events.presentation.allEventsView
+package kz.kolesateam.confapp.alleventsscreen.allEventsView
 
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.presentation.iconFavoriteClick
-import kz.kolesateam.confapp.events.presentation.showShortToastMessage
+import kz.kolesateam.confapp.iconFavoriteClick
+import kz.kolesateam.confapp.showShortToastMessage
 import kz.kolesateam.confapp.events.presentation.view.DATE_AND_PLACE_FORMAT
 
 class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {

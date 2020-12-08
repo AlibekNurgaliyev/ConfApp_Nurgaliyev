@@ -7,19 +7,13 @@
     android:orientation="vertical"
     >
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <include
+        android:id="@+id/branch_current_event"
+        layout="@layout/events_card_layout"
+        android:layout_width="@dimen/activity_all_events_item"
         android:layout_height="wrap_content"
-        >
-
-        <include
-            android:id="@+id/branch_current_event"
-            layout="@layout/events_card_layout"
-            android:layout_width="@dimen/activity_all_events_item"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/layout_spacing_16x"
-            android:layout_marginRight="@dimen/layout_spacing_16x"
-            />
-    </LinearLayout>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="@dimen/layout_spacing_16x"
+        android:layout_marginRight="@dimen/layout_spacing_16x"
+        />
 </LinearLayout>

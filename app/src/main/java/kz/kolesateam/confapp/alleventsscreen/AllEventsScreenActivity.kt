@@ -1,8 +1,6 @@
-package kz.kolesateam.confapp.events.presentation
+package kz.kolesateam.confapp.alleventsscreen
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
@@ -10,18 +8,14 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import kz.kolesateam.confapp.R
+import kotlinx.coroutines.*
+import kz.kolesateam.confapp.*
 import kz.kolesateam.confapp.events.data.EventRepository
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 import kz.kolesateam.confapp.events.presentation.view.BRANCH_ID
 import kz.kolesateam.confapp.events.presentation.view.TITLE_NAME
-import kz.kolesateam.confapp.events.presentation.view.VIEW_HOLDER_SHARED_PREFERENCES
 import kz.kolesateam.confapp.events.utils.model.ResponseData
-import org.w3c.dom.Text
 
 class AllEventsScreenActivity : AppCompatActivity() {
 
@@ -56,15 +50,16 @@ class AllEventsScreenActivity : AppCompatActivity() {
         activityAllEventsScreenFavoriteButton.setOnClickListener {
             showShortToastMessage(this, "Favorites")
         }
-        activityAllEventsScreenEventName.text = getSavedEventName()
-
+        activityAllEventsScreenEventName.text = sharedPreferencesLoadData(this, TITLE_NAME)
     }
 
     private fun loadEvents() {
         progressBar.show()
         GlobalScope.launch(Dispatchers.Main) {
             val response: ResponseData<List<EventApiData>, String> = withContext(Dispatchers.IO) {
-                eventsRepository.getEvents(getSavedUserName())
+                eventsRepository.getEvents(
+                    sharedPreferencesLoadData(this@AllEventsScreenActivity, BRANCH_ID)
+                )
             }
             when (response) {
                 is ResponseData.Success -> {
@@ -84,24 +79,6 @@ class AllEventsScreenActivity : AppCompatActivity() {
     }
 
     private fun showError(error: String) {
-    }
-
-    private fun getSavedUserName(): String {
-        val sharedPreferences: SharedPreferences =
-            getSharedPreferences(
-                VIEW_HOLDER_SHARED_PREFERENCES,
-                Context.MODE_PRIVATE
-            )
-        return sharedPreferences.getString(BRANCH_ID, "Default Text") ?: "Default Text"
-    }
-
-    private fun getSavedEventName(): String {
-        val sharedPreferences: SharedPreferences =
-            getSharedPreferences(
-                VIEW_HOLDER_SHARED_PREFERENCES,
-                Context.MODE_PRIVATE
-            )
-        return sharedPreferences.getString(TITLE_NAME, "Default Text") ?: "Default Text"
     }
 
     private fun navigateUpcomingEvents() {

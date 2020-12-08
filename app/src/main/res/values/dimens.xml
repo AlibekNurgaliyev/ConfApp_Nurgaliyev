@@ -28,5 +28,5 @@
     <dimen name="activity_branch_item_ic_favorite">32dp</dimen>
     <dimen name="activity_hello_layout_height">173dp</dimen>
     <dimen name="activity_branch_item_width">280dp</dimen>
-    <dimen name="activity_all_events_item">350dp</dimen>
+    <dimen name="activity_all_events_item">370dp</dimen>
 </resources>
