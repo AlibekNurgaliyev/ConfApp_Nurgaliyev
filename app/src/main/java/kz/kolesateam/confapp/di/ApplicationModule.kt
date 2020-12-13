@@ -1,6 +1,5 @@
 package kz.kolesateam.confapp.di
 
-
 import android.content.Context
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.Module

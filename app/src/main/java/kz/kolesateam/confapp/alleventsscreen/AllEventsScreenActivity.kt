@@ -8,14 +8,21 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.*
-import kz.kolesateam.confapp.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.EventRepository
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 import kz.kolesateam.confapp.events.presentation.view.BRANCH_ID
 import kz.kolesateam.confapp.events.presentation.view.TITLE_NAME
 import kz.kolesateam.confapp.events.utils.model.ResponseData
+import kz.kolesateam.confapp.sharedPreferencesLoadData
+import kz.kolesateam.confapp.show
+import kz.kolesateam.confapp.showShortToastMessage
+import kz.kolesateam.confapp.hide
 
 class AllEventsScreenActivity : AppCompatActivity() {
 
