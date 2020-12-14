@@ -17,23 +17,14 @@ import kz.kolesateam.confapp.hide
 import kz.kolesateam.confapp.show
 import kz.kolesateam.confapp.setTextAndTextColor
 import kz.kolesateam.confapp.sharedPreferencesLoadData
+import org.koin.android.ext.android.inject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.jackson.JacksonConverterFactory
-
-private const val BASE_URL = "http://37.143.8.68:2020/"
-
-val apiRetrofit: Retrofit =
-    Retrofit.Builder()
-        .baseUrl(BASE_URL)
-        .addConverterFactory(JacksonConverterFactory.create())
-        .build()
-
-val apiClient = apiRetrofit.create(UpcomingEventsDataSource::class.java)
 
 class UpcomingEventsActivity : AppCompatActivity() {
+    private val upcomingEventsDataSource: UpcomingEventsDataSource by inject()
+
     private lateinit var errorDataLoadText: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
@@ -63,42 +54,44 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
     private fun loadApiData() {
         progressBar.show()
-        apiClient.getUpcomingEvents().enqueue(object : Callback<List<BranchApiData>> {
-            override fun onResponse(call: Call<List<BranchApiData>>,
-                                    response: Response<List<BranchApiData>>) {
-                progressBar.hide()
-                if (response.isSuccessful) {
-                    val upcomingEventsListItemList: MutableList<UpcomingEventsListItem> =
-                        mutableListOf()
-                    val headerListItem = UpcomingEventsListItem(
-                        type = 1,
-                        data = String.format(resources.getString(R.string.activity_upcoming_events_shared_prefs_name),
-                            sharedPreferencesLoadData(this@UpcomingEventsActivity, USER_NAME_KEY)
-                        )
-                    )
-                    val branchListItemList: List<UpcomingEventsListItem> =
-                        response.body()!!.map { branchApiData ->
-                            UpcomingEventsListItem(
-                                type = 2,
-                                data = branchApiData
+        upcomingEventsDataSource.getUpcomingEvents()
+            .enqueue(object : Callback<List<BranchApiData>> {
+                override fun onResponse(call: Call<List<BranchApiData>>,
+                                        response: Response<List<BranchApiData>>) {
+                    progressBar.hide()
+                    if (response.isSuccessful) {
+                        val upcomingEventsListItemList: MutableList<UpcomingEventsListItem> =
+                            mutableListOf()
+                        val headerListItem = UpcomingEventsListItem(
+                            type = 1,
+                            data = String.format(resources.getString(R.string.activity_upcoming_events_shared_prefs_name),
+                                sharedPreferencesLoadData(this@UpcomingEventsActivity,
+                                    USER_NAME_KEY)
                             )
-                        }
-                    upcomingEventsListItemList.add(headerListItem)
-                    upcomingEventsListItemList.addAll(branchListItemList)
-                    branchAdapter.setList(upcomingEventsListItemList)
+                        )
+                        val branchListItemList: List<UpcomingEventsListItem> =
+                            response.body()!!.map { branchApiData ->
+                                UpcomingEventsListItem(
+                                    type = 2,
+                                    data = branchApiData
+                                )
+                            }
+                        upcomingEventsListItemList.add(headerListItem)
+                        upcomingEventsListItemList.addAll(branchListItemList)
+                        branchAdapter.setList(upcomingEventsListItemList)
+                    }
                 }
-            }
 
-            override fun onFailure(call: Call<List<BranchApiData>>, t: Throwable) {
-                progressBar.hide()
-                favoriteButton.hide()
-                errorDataLoadText.show()
-                setTextAndTextColor(
-                    errorDataLoadText,
-                    t.localizedMessage!!,
-                    this@UpcomingEventsActivity,
-                    R.color.activity_upcoming_events_text_color_error)
-            }
-        })
+                override fun onFailure(call: Call<List<BranchApiData>>, t: Throwable) {
+                    progressBar.hide()
+                    favoriteButton.hide()
+                    errorDataLoadText.show()
+                    setTextAndTextColor(
+                        errorDataLoadText,
+                        t.localizedMessage!!,
+                        this@UpcomingEventsActivity,
+                        R.color.activity_upcoming_events_text_color_error)
+                }
+            })
     }
 }

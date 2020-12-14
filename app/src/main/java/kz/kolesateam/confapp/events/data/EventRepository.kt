@@ -12,7 +12,6 @@ class EventRepository() {
 
     fun getEvents(branchIdName: String): ResponseData<List<EventApiData>, String> {
         return try {
-
             val response: Response<List<EventApiData>> = upcomingEventsDataSource.getEvents(branchIdName).execute()
 
             if (response.isSuccessful) {
