@@ -7,12 +7,16 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kz.kolesateam.confapp.*
+import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.hello.presentation.USER_NAME_KEY
+import kz.kolesateam.confapp.hide
+import kz.kolesateam.confapp.show
+import kz.kolesateam.confapp.setTextAndTextColor
+import kz.kolesateam.confapp.sharedPreferencesLoadData
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

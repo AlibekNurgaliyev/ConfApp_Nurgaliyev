@@ -2,7 +2,10 @@ package kz.kolesateam.confapp.events.presentation.view
 
 import android.content.Intent
 import android.view.View
-import android.widget.*
+import android.widget.HorizontalScrollView
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.alleventsscreen.AllEventsScreenActivity
