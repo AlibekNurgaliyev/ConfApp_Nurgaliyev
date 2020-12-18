@@ -20,6 +20,8 @@ const val TITLE_NAME = "title_name"
 const val DATE_AND_PLACE_FORMAT = "%s - %s • %s"
 
 class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+
     private val branchCurrentEvent: View = itemView.findViewById(R.id.branch_current_event)
     private val branchNextEvent: View = itemView.findViewById(R.id.branch_next_event)
     private val branchTitle: TextView = itemView.findViewById(R.id.branch_title)

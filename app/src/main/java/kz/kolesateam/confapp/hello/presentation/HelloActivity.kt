@@ -9,14 +9,11 @@ import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.di.MEMORY_DATA_SOURCE
-import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
 import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
-import kz.kolesateam.confapp.sharedPreferencesSaveData
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 
-//const val USER_NAME_KEY = "user_name"
 const val APPLICATION_SHARED_PREFERENCES = "application"
 
 class HelloActivity : AppCompatActivity() {
@@ -34,7 +31,6 @@ class HelloActivity : AppCompatActivity() {
         val nameEditText: EditText = findViewById(R.id.edit_text_name)
         nameEditText.addTextChangedListener(textWatcher)
         continueButton.setOnClickListener {
-            //sharedPreferencesSaveData(this, nameEditText.text.toString(), USER_NAME_KEY)
             saveUserName(nameEditText.text.toString())
             navigateToTestHelloActivity()
         }

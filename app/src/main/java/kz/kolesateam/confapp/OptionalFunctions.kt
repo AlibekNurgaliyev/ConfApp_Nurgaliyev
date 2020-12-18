@@ -28,17 +28,6 @@ fun iconFavoriteClick(isIconFavoriteClicked: Boolean, iconFavorite: ImageView): 
     }
 }
 
-fun sharedPreferencesSaveData(currentActivity: Activity, userName: String, constant: String) {
-    val sharedPreferences: SharedPreferences =
-        currentActivity.getSharedPreferences(
-            APPLICATION_SHARED_PREFERENCES,
-            Context.MODE_PRIVATE
-        )
-    val editor: SharedPreferences.Editor = sharedPreferences.edit()
-    editor.putString(constant, userName)
-    editor.apply()
-}
-
 fun sharedPreferencesSaveData(currentContext: Context, userName: String, constant: String) {
     val sharedPreferences: SharedPreferences =
         currentContext.getSharedPreferences(
