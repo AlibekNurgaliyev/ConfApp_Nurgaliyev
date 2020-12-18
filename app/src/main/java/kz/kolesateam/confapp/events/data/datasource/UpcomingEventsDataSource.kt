@@ -2,6 +2,8 @@ package kz.kolesateam.confapp.events.data.datasource
 
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import org.koin.android.ext.android.inject
+import org.koin.java.KoinJavaComponent.inject
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory

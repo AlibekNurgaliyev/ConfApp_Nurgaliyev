@@ -8,13 +8,20 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.di.MEMORY_DATA_SOURCE
+import kz.kolesateam.confapp.di.SHARED_PREFS_DATA_SOURCE
+import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 import kz.kolesateam.confapp.sharedPreferencesSaveData
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
-const val USER_NAME_KEY = "user_name"
+//const val USER_NAME_KEY = "user_name"
 const val APPLICATION_SHARED_PREFERENCES = "application"
 
 class HelloActivity : AppCompatActivity() {
+
+    private val userNameDataSource: UserNameDataSource by inject(named(MEMORY_DATA_SOURCE))
 
     private val continueButton: Button by lazy {
         findViewById(R.id.button_continue)
@@ -27,10 +34,16 @@ class HelloActivity : AppCompatActivity() {
         val nameEditText: EditText = findViewById(R.id.edit_text_name)
         nameEditText.addTextChangedListener(textWatcher)
         continueButton.setOnClickListener {
-            sharedPreferencesSaveData(this, nameEditText.text.toString(), USER_NAME_KEY)
+            //sharedPreferencesSaveData(this, nameEditText.text.toString(), USER_NAME_KEY)
+            saveUserName(nameEditText.text.toString())
             navigateToTestHelloActivity()
         }
     }
+
+    private fun saveUserName(name: String) {
+        userNameDataSource.saveUserName(name)
+    }
+
 
     private fun navigateToTestHelloActivity() {
         val testIntent = Intent(this, UpcomingEventsActivity::class.java)
