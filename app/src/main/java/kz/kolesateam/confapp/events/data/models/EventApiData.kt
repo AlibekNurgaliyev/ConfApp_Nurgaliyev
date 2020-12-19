@@ -1,5 +1,6 @@
 package kz.kolesateam.confapp.events.data.models
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
@@ -18,5 +19,7 @@ data class EventApiData(
     @JsonProperty("place")
     val place: String?,
     @JsonProperty("speaker")
-    val speaker: SpeakerApiData?
-)
+    val speaker: SpeakerApiData?,
+){
+    var isFavorite: Boolean = false
+}

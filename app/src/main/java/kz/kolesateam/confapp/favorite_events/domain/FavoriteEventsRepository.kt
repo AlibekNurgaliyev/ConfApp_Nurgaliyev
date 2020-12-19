@@ -10,7 +10,7 @@ interface FavoriteEventsRepository {
     )
 
     fun removeFavoriteEvent(
-        eventId: Int
+        eventId: Int?
     )
 
     fun getAllFavoriteEvents(): ResponseData<List<EventApiData>, Exception>

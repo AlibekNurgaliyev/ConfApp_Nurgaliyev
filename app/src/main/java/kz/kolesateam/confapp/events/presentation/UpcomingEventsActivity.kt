@@ -1,5 +1,6 @@
 package kz.kolesateam.confapp.events.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ProgressBar
@@ -12,8 +13,11 @@ import kz.kolesateam.confapp.di.MEMORY_DATA_SOURCE
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
+import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
+import kz.kolesateam.confapp.favorite_events.presentation.FavoriteEventsActivity
 import kz.kolesateam.confapp.hide
 import kz.kolesateam.confapp.show
 import kz.kolesateam.confapp.setTextAndTextColor
@@ -30,6 +34,9 @@ class UpcomingEventsActivity : AppCompatActivity() {
     private val userNameDataSource: UserNameDataSource by inject(named(
         MEMORY_DATA_SOURCE))
 
+    private val favoriteEventsRepository: FavoriteEventsRepository by inject()
+
+
     private lateinit var errorDataLoadText: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
@@ -44,6 +51,15 @@ class UpcomingEventsActivity : AppCompatActivity() {
         bindViews()
         initViews()
         loadApiData()
+    }
+
+    fun onFavoriteClick(
+        eventData: EventApiData
+    ) {
+        when (eventData.isFavorite) {
+            true -> favoriteEventsRepository.saveFavoriteEvent(eventData)
+            else -> favoriteEventsRepository.removeFavoriteEvent(eventId = eventData.id)
+        }
     }
 
     private fun initViews() {
@@ -62,6 +78,9 @@ class UpcomingEventsActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL,
             false
         )
+        favoriteButton.setOnClickListener{
+            startActivity(Intent(this, FavoriteEventsActivity::class.java))
+        }
     }
 
     private fun loadApiData() {

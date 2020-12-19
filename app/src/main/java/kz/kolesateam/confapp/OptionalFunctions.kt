@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 import kz.kolesateam.confapp.hello.presentation.APPLICATION_SHARED_PREFERENCES
 
 fun setTextAndTextColor(textView: TextView, body: String, activityName: Activity, colorId: Int) {
@@ -26,6 +28,10 @@ fun iconFavoriteClick(isIconFavoriteClicked: Boolean, iconFavorite: ImageView): 
         iconFavorite.setImageResource(R.drawable.ic_favorite_solid)
         return true
     }
+}
+
+fun onFavoriteClick(eventData:EventApiData) {
+    UpcomingEventsActivity.onFavoriteClick(eventData)
 }
 
 fun sharedPreferencesSaveData(currentContext: Context, userName: String, constant: String) {
