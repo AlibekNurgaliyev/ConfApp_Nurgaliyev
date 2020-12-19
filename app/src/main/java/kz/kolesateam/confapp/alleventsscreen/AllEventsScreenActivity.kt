@@ -13,7 +13,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.EventRepository
+import kz.kolesateam.confapp.events.data.DefaultAllEventRepository
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 import kz.kolesateam.confapp.events.presentation.view.BRANCH_ID
@@ -23,6 +23,7 @@ import kz.kolesateam.confapp.sharedPreferencesLoadData
 import kz.kolesateam.confapp.show
 import kz.kolesateam.confapp.showShortToastMessage
 import kz.kolesateam.confapp.hide
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class AllEventsScreenActivity : AppCompatActivity() {
 
@@ -32,14 +33,15 @@ class AllEventsScreenActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var activityAllEventsScreenEventName: TextView
 
-    private val eventsRepository: EventRepository = EventRepository()
+    //private val eventsRepositoryDefaultAll: DefaultAllEventRepository = DefaultAllEventRepository()
+    private val allEventsViewModel: AllEventsViewModel by viewModel()
     private val allEventsScreenAdapter: AllEventsScreenAdapter = AllEventsScreenAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_events_screen)
         bindViews()
-        loadEvents()
+//        loadEvents()
     }
 
     private fun bindViews() {
@@ -60,26 +62,7 @@ class AllEventsScreenActivity : AppCompatActivity() {
         activityAllEventsScreenEventName.text = sharedPreferencesLoadData(this, TITLE_NAME)
     }
 
-    private fun loadEvents() {
-        progressBar.show()
-        GlobalScope.launch(Dispatchers.Main) {
-            val response: ResponseData<List<EventApiData>, String> = withContext(Dispatchers.IO) {
-                eventsRepository.getEvents(
-                    sharedPreferencesLoadData(this@AllEventsScreenActivity, BRANCH_ID)
-                )
-            }
-            when (response) {
-                is ResponseData.Success -> {
-                    showResult(response.result)
-                    progressBar.hide()
-                }
-                is ResponseData.Error -> {
-                    showError(response.error)
-                    progressBar.hide()
-                }
-            }
-        }
-    }
+
 
     private fun showResult(eventApiDataList: List<EventApiData>) {
         allEventsScreenAdapter.setList(eventApiDataList)
