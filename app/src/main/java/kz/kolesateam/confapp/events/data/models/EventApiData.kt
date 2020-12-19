@@ -20,6 +20,6 @@ data class EventApiData(
     val place: String?,
     @JsonProperty("speaker")
     val speaker: SpeakerApiData?,
-    @JsonIgnore
+){
     var isFavorite: Boolean = false
-)
+}

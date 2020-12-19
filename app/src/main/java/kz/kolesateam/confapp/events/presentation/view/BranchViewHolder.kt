@@ -2,24 +2,21 @@ package kz.kolesateam.confapp.events.presentation.view
 
 import android.content.Intent
 import android.view.View
-import android.widget.*
+import android.widget.HorizontalScrollView
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.*
 import kz.kolesateam.confapp.alleventsscreen.AllEventsScreenActivity
-import kz.kolesateam.confapp.di.favoriteEventsModule
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
-import kz.kolesateam.confapp.iconFavoriteClick
-import kz.kolesateam.confapp.sharedPreferencesSaveData
-import kz.kolesateam.confapp.showShortToastMessage
 
 const val BRANCH_ID = "branch_id"
 const val TITLE_NAME = "title_name"
 const val DATE_AND_PLACE_FORMAT = "%s - %s • %s"
 
 class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
     private lateinit var currentEvent: EventApiData
     private lateinit var nextEvent: EventApiData
 
@@ -107,26 +104,19 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
 
         iconFavoriteCurrent.setOnClickListener {
-            //isIconFavoriteClicked = iconFavoriteClick(isIconFavoriteClicked, iconFavoriteCurrent)
             currentEvent.isFavorite = !currentEvent.isFavorite
-            val favoriteImageResource = getFavoriteResource(currentEvent.isFavorite)
+            val favoriteImageResource = getFavoriteImageResource(currentEvent.isFavorite)
             iconFavoriteCurrent.setImageResource(favoriteImageResource)
-
-            //save and remove realization>
-//            when (currentEvent.isFavorite) {
-//                true ->
-//                else ->
-//            }
-
+            //isIconFavoriteClicked = iconFavoriteClick(isIconFavoriteClicked, iconFavoriteCurrent)
+            onFavoriteClick(currentEvent)
         }
 
         iconFavoriteNext.setOnClickListener {
-            //isIconFavoriteClicked = iconFavoriteClick(isIconFavoriteClicked, iconFavoriteNext)
             nextEvent.isFavorite = !nextEvent.isFavorite
-            val favoriteImageResource = getFavoriteResource(nextEvent.isFavorite)
+            val favoriteImageResource = getFavoriteImageResource(nextEvent.isFavorite)
             iconFavoriteNext.setImageResource(favoriteImageResource)
-
-
+            //isIconFavoriteClicked = iconFavoriteClick(isIconFavoriteClicked, iconFavoriteNext)
+            onFavoriteClick(nextEvent)
         }
         branchItemScrollView.onScroll()
     }
@@ -149,7 +139,7 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
     }
 
-    private fun getFavoriteResource(
+    private fun getFavoriteImageResource(
         isFavorite: Boolean
     ): Int = when (isFavorite) {
         true -> R.drawable.ic_favorite_solid
