@@ -7,22 +7,15 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.DefaultAllEventRepository
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
-import kz.kolesateam.confapp.events.presentation.view.BRANCH_ID
 import kz.kolesateam.confapp.events.presentation.view.TITLE_NAME
-import kz.kolesateam.confapp.events.utils.model.ResponseData
+import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.sharedPreferencesLoadData
-import kz.kolesateam.confapp.show
 import kz.kolesateam.confapp.showShortToastMessage
-import kz.kolesateam.confapp.hide
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class AllEventsScreenActivity : AppCompatActivity() {
@@ -42,6 +35,8 @@ class AllEventsScreenActivity : AppCompatActivity() {
         setContentView(R.layout.activity_all_events_screen)
         bindViews()
 //        loadEvents()
+        observeAllEventsViewModel()
+        allEventsViewModel.onStart()
     }
 
     private fun bindViews() {
@@ -62,7 +57,17 @@ class AllEventsScreenActivity : AppCompatActivity() {
         activityAllEventsScreenEventName.text = sharedPreferencesLoadData(this, TITLE_NAME)
     }
 
+    private fun observeAllEventsViewModel() {
+        allEventsViewModel.getProgressLiveData().observe(this, ::handleProgressBarState)
+        allEventsViewModel.getAllEventsLiveData().observe(this, ::showResult)
+        allEventsViewModel.getErrorLiveData().observe(this, ::showError)
+    }
 
+    private fun handleProgressBarState(
+        progressState: ProgressState
+    ) {
+        progressBar.isVisible = progressState is ProgressState.Loading
+    }
 
     private fun showResult(eventApiDataList: List<EventApiData>) {
         allEventsScreenAdapter.setList(eventApiDataList)

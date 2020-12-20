@@ -7,16 +7,26 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import kz.kolesateam.confapp.*
+import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.alleventsscreen.AllEventsScreenActivity
+import kz.kolesateam.confapp.di.BRANCH_ID_DATA_SOURCE
+import kz.kolesateam.confapp.events.data.datasource.BranchIdDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.onFavoriteClick
+import kz.kolesateam.confapp.sharedPreferencesSaveData
+import kz.kolesateam.confapp.showShortToastMessage
+import org.koin.core.qualifier.named
+import org.koin.java.KoinJavaComponent.inject
 
 const val BRANCH_ID = "branch_id"
 const val TITLE_NAME = "title_name"
 const val DATE_AND_PLACE_FORMAT = "%s - %s • %s"
 
 class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    //HERE!!
+//    private val branchIdDataSource:BranchIdDataSource by inject(named(BRANCH_ID_DATA_SOURCE))
+
     private lateinit var currentEvent: EventApiData
     private lateinit var nextEvent: EventApiData
 
@@ -49,8 +59,6 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         branchNextEvent.findViewById(R.id.event_company_name)
     private val eventTitleNext: TextView =
         branchNextEvent.findViewById(R.id.event_title)
-
-    private var isIconFavoriteClicked: Boolean = false
 
     init {
         branchCurrentEvent.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
@@ -90,6 +98,7 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         eventTitleNext.text = nextEvent.title
 
         branchTitleAndArrow.setOnClickListener {
+            //need to take this BRANCHID value
             sharedPreferencesSaveData(itemView.context, branchApiData.id!!.toString(), BRANCH_ID)
             sharedPreferencesSaveData(itemView.context, branchApiData.title!!, TITLE_NAME)
             navigateToAllEventsScreenActivity()
@@ -107,7 +116,6 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             currentEvent.isFavorite = !currentEvent.isFavorite
             val favoriteImageResource = getFavoriteImageResource(currentEvent.isFavorite)
             iconFavoriteCurrent.setImageResource(favoriteImageResource)
-            //isIconFavoriteClicked = iconFavoriteClick(isIconFavoriteClicked, iconFavoriteCurrent)
             onFavoriteClick(currentEvent)
         }
 
@@ -115,7 +123,6 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             nextEvent.isFavorite = !nextEvent.isFavorite
             val favoriteImageResource = getFavoriteImageResource(nextEvent.isFavorite)
             iconFavoriteNext.setImageResource(favoriteImageResource)
-            //isIconFavoriteClicked = iconFavoriteClick(isIconFavoriteClicked, iconFavoriteNext)
             onFavoriteClick(nextEvent)
         }
         branchItemScrollView.onScroll()
@@ -125,6 +132,9 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val intent = Intent(itemView.context, AllEventsScreenActivity::class.java)
         itemView.context.startActivity(intent)
     }
+//    private fun saveBranchIdDataSource(branchId: String) {
+//        branchIdDataSource.saveUserName(branchId)
+//    }
 
     private fun HorizontalScrollView.onScroll() {
         branchItemScrollView.viewTreeObserver?.addOnScrollChangedListener {
@@ -146,3 +156,4 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         else -> R.drawable.ic_favorite_border
     }
 }
+

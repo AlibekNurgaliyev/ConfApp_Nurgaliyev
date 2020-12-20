@@ -14,7 +14,7 @@ val userNameModule: Module = module {
 
     factory(named(SHARED_PREFS_DATA_SOURCE)) {
         UserNameSharedPrefsDataSource(
-            sharedPrefernces = get()
+            sharedPreferences = get()
         ) as UserNameDataSource
     }
 

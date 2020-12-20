@@ -7,39 +7,53 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import kz.kolesateam.confapp.events.data.datasource.BranchIdDataSource
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.events.presentation.view.BRANCH_ID
 import kz.kolesateam.confapp.events.utils.model.ResponseData
-import kz.kolesateam.confapp.sharedPreferencesLoadData
+import kz.kolesateam.confapp.models.ProgressState
 
+
+//private val userNameDataSource: UserNameDataSource by inject(named(MEMORY_DATA_SOURCE))
 class AllEventsViewModel(
-
-    private val allEventsRepository: AllEventsRepository
+    private val allEventsRepository: AllEventsRepository,
+    private val branchIdDataSource: BranchIdDataSource
 ) : ViewModel() {
-    private val resultLiveData: LiveData<String> = MutableLiveData()
 
-    fun getResultLiveData() : LiveData<String> = resultLiveData
+    private val progressLiveData: MutableLiveData<ProgressState> = MutableLiveData()
+    private val allEventsLiveData: MutableLiveData<List<EventApiData>> = MutableLiveData()
+    private val errorLiveData: MutableLiveData<String> = MutableLiveData()
+
+    fun getProgressLiveData(): LiveData<ProgressState> = progressLiveData
+    fun getAllEventsLiveData(): LiveData<List<EventApiData>> = allEventsLiveData
+    fun getErrorLiveData(): LiveData<String> = errorLiveData
 
 
+    fun onStart() {
+        loadEvents()
+    }
 
     private fun loadEvents() {
-        progressBar.show()
+        //progressBar.show()
         GlobalScope.launch(Dispatchers.Main) {
+            progressLiveData.value = ProgressState.Loading
             val response: ResponseData<List<EventApiData>, String> = withContext(Dispatchers.IO) {
                 allEventsRepository.getAllEvents(
-                    sharedPreferencesLoadData(this@AllEventsScreenActivity, BRANCH_ID)
+                    //sharedPreferencesLoadData(this@AllEventsScreenActivity, BRANCH_ID)
+                    branchIdDataSource.getBranchId().toString()
                 )
             }
             when (response) {
-                is ResponseData.Success -> { resultLiveData.value = response
+                is ResponseData.Success -> { allEventsLiveData.value = response.result
 //                    showResult(response.result)
 //                    progressBar.hide()
                 }
                 is ResponseData.Error -> {
-                    showError(response.error)
-                    progressBar.hide()
+                    errorLiveData.value = response.error
+                    //showError(response.error)
+                    //progressBar.hide()
                 }
             }
+            progressLiveData.value = ProgressState.Done
         }
     }
 }

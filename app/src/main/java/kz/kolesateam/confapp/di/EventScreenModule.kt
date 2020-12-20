@@ -5,6 +5,7 @@ import kz.kolesateam.confapp.events.data.DefaultAllEventRepository
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.core.module.Module
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.jackson.JacksonConverterFactory
@@ -29,7 +30,8 @@ val eventScreenModule: Module = module {
     }
 
     viewModel {
-        AllEventsViewModel(allEventsRepository = get())
+        AllEventsViewModel(allEventsRepository = get(),
+        branchIdDataSource = get(named(BRANCH_ID_DATA_SOURCE)))
     }
 
 }
