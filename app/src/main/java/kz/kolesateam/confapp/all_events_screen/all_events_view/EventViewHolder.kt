@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.alleventsscreen.allEventsView
+package kz.kolesateam.confapp.all_events_screen.all_events_view
 
 import android.view.View
 import android.widget.ImageView

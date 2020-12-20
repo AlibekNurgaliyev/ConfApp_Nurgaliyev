@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.alleventsscreen
+package kz.kolesateam.confapp.all_events_screen
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -33,7 +33,6 @@ class AllEventsViewModel(
     }
 
     private fun loadEvents() {
-        //progressBar.show()
         GlobalScope.launch(Dispatchers.Main) {
             progressLiveData.value = ProgressState.Loading
             val response: ResponseData<List<EventApiData>, String> = withContext(Dispatchers.IO) {
@@ -44,13 +43,9 @@ class AllEventsViewModel(
             }
             when (response) {
                 is ResponseData.Success -> { allEventsLiveData.value = response.result
-//                    showResult(response.result)
-//                    progressBar.hide()
                 }
                 is ResponseData.Error -> {
                     errorLiveData.value = response.error
-                    //showError(response.error)
-                    //progressBar.hide()
                 }
             }
             progressLiveData.value = ProgressState.Done

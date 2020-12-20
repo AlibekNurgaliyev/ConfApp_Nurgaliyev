@@ -1,11 +1,11 @@
-package kz.kolesateam.confapp.alleventsscreen
+package kz.kolesateam.confapp.all_events_screen
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.alleventsscreen.allEventsView.EventViewHolder
+import kz.kolesateam.confapp.all_events_screen.all_events_view.EventViewHolder
 
 class AllEventsScreenAdapter : RecyclerView.Adapter<EventViewHolder>() {
     private val eventDataList: MutableList<EventApiData> = mutableListOf()

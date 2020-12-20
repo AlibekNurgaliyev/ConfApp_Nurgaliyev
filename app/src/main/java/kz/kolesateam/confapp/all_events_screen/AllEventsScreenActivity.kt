@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.alleventsscreen
+package kz.kolesateam.confapp.all_events_screen
 
 import android.content.Intent
 import android.os.Bundle

@@ -8,17 +8,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.alleventsscreen.AllEventsScreenActivity
-import kz.kolesateam.confapp.di.BRANCH_ID_DATA_SOURCE
-import kz.kolesateam.confapp.events.data.datasource.BranchIdDataSource
+import kz.kolesateam.confapp.all_events_screen.AllEventsScreenActivity
 import kz.kolesateam.confapp.events.data.datasource.FavoriteClickListener
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
 
 import kz.kolesateam.confapp.sharedPreferencesSaveData
 import kz.kolesateam.confapp.showShortToastMessage
-import org.koin.core.qualifier.named
-import org.koin.java.KoinJavaComponent.inject
 
 const val BRANCH_ID = "branch_id"
 const val TITLE_NAME = "title_name"
@@ -121,8 +117,6 @@ class BranchViewHolder(
             val favoriteImageResource = getFavoriteImageResource(currentEvent.isFavorite)
             iconFavoriteCurrent.setImageResource(favoriteImageResource)
             favoriteClickListener.onClick(currentEvent)
-//            onFavoriteClick(currentEvent)
-
         }
 
         iconFavoriteNext.setOnClickListener {
@@ -130,7 +124,6 @@ class BranchViewHolder(
             val favoriteImageResource = getFavoriteImageResource(nextEvent.isFavorite)
             iconFavoriteNext.setImageResource(favoriteImageResource)
             favoriteClickListener.onClick(nextEvent)
-//            onFavoriteClick(nextEvent)
         }
         branchItemScrollView.onScroll()
     }

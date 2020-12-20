@@ -1,6 +1,6 @@
 package kz.kolesateam.confapp.events.data
 
-import kz.kolesateam.confapp.alleventsscreen.AllEventsRepository
+import kz.kolesateam.confapp.all_events_screen.AllEventsRepository
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.utils.model.ResponseData

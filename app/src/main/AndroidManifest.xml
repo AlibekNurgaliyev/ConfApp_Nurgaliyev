@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true">
         <activity android:name=".favorite_events.presentation.FavoriteEventsActivity"></activity>
         <activity android:name=".events.presentation.UpcomingEventsActivity" />
-        <activity android:name=".alleventsscreen.AllEventsScreenActivity" />
+        <activity android:name=".all_events_screen.AllEventsScreenActivity" />
         <activity
             android:name=".hello.presentation.HelloActivity"
             android:theme="@style/SplashScreenTheme">
