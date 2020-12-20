@@ -6,15 +6,15 @@
     <string name="activity_upcoming_events_button_async_loading">Async loading</string>
     <string name="activity_upcoming_events_internet_access_alert">Please check your internet access</string>
     <string name="continue_button_text">Continue</string>
-<!--    activity_upcoming_events-->
+    <!--    activity_upcoming_events-->
     <string name="activity_upcoming_events_shared_prefs_name">Hello %1$s!</string>
     <string name="activity_upcoming_events_favorite_text">В избранные</string>
-<!--    activity_events_card_layout-->
+    <!--    activity_events_card_layout-->
     <string name="activity_events_card_layout_next_event">Next event</string>
     <string name="activity_events_card_layout_date_time">Time example</string>
     <string name="activity_events_card_layout_speaker_name">Speaker name example</string>
     <string name="activity_events_card_layout_speaker_company_name">Speaker company name example</string>
     <string name="activity_events_card_layout_event_title">Event title example</string>
-<!--    activity_branch_item-->
+    <!--    activity_branch_item-->
     <string name="activity_branch_item_branch_title">Branch title example</string>
 </resources>

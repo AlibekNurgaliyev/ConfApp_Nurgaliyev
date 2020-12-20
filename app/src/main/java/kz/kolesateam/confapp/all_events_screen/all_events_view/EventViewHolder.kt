@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.alleventsscreen.allEventsView
+package kz.kolesateam.confapp.all_events_screen.all_events_view
 
 import android.view.View
 import android.widget.ImageView
@@ -40,7 +40,7 @@ class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         eventTitle.text = eventApiData.title
 
         branchEvent.setOnClickListener {
-            showShortToastMessage(itemView.context, eventTitle.text)
+            itemView.context.showShortToastMessage(eventTitle.text)
         }
 
         iconFavorite.setOnClickListener {

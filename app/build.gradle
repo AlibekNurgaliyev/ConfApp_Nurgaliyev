@@ -33,6 +33,9 @@ android {
 }
 
 dependencies {
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    implementation "org.koin:koin-android-viewmodel:2.2.0"
     // Koin for Android
     implementation "org.koin:koin-android:2.2.0"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"

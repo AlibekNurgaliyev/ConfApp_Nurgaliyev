@@ -1,5 +1,6 @@
 package kz.kolesateam.confapp.events.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ProgressBar
@@ -8,34 +9,65 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.all_events_screen.AllEventsScreenActivity
+import kz.kolesateam.confapp.di.MEMORY_DATA_SOURCE
+import kz.kolesateam.confapp.events.data.datasource.FavoriteClickListener
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
+import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
+import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
-import kz.kolesateam.confapp.hello.presentation.USER_NAME_KEY
+import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
+import kz.kolesateam.confapp.favorite_events.presentation.FavoriteEventsActivity
 import kz.kolesateam.confapp.hide
-import kz.kolesateam.confapp.show
 import kz.kolesateam.confapp.setTextAndTextColor
-import kz.kolesateam.confapp.sharedPreferencesLoadData
+import kz.kolesateam.confapp.show
 import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val DEFAULT_USER_NAME = "No_name"
+
 class UpcomingEventsActivity : AppCompatActivity() {
     private val upcomingEventsDataSource: UpcomingEventsDataSource by inject()
+    private val userNameDataSource: UserNameDataSource by inject(named(
+        MEMORY_DATA_SOURCE))
+
+    private val favoriteEventsRepository: FavoriteEventsRepository by inject()
 
     private lateinit var errorDataLoadText: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
     private lateinit var favoriteButton: Button
-    private val branchAdapter: BranchAdapter = BranchAdapter()
+    private lateinit var userName: String
+
+    private val branchAdapter: BranchAdapter = BranchAdapter(
+        favoriteClickListener = getFavoriteClickListener(),
+        branchTitleClickListener = getBranchTitleClickListener()
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_upcoming_events)
         bindViews()
+        initViews()
         loadApiData()
+    }
+
+    fun onFavoriteClick(
+        eventData: EventApiData
+    ) {
+        when (eventData.isFavorite) {
+            true -> favoriteEventsRepository.saveFavoriteEvent(eventData)
+            else -> favoriteEventsRepository.removeFavoriteEvent(eventId = eventData.id)
+        }
+    }
+
+    private fun initViews() {
+        userName = userNameDataSource.getUserName() ?: DEFAULT_USER_NAME
     }
 
     private fun bindViews() {
@@ -50,6 +82,10 @@ class UpcomingEventsActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL,
             false
         )
+        favoriteButton.setOnClickListener {
+            getFavoriteClickListener()
+            startActivity(Intent(this, FavoriteEventsActivity::class.java))
+        }
     }
 
     private fun loadApiData() {
@@ -65,8 +101,7 @@ class UpcomingEventsActivity : AppCompatActivity() {
                         val headerListItem = UpcomingEventsListItem(
                             type = 1,
                             data = String.format(resources.getString(R.string.activity_upcoming_events_shared_prefs_name),
-                                sharedPreferencesLoadData(this@UpcomingEventsActivity,
-                                    USER_NAME_KEY)
+                                userName
                             )
                         )
                         val branchListItemList: List<UpcomingEventsListItem> =
@@ -79,6 +114,17 @@ class UpcomingEventsActivity : AppCompatActivity() {
                         upcomingEventsListItemList.add(headerListItem)
                         upcomingEventsListItemList.addAll(branchListItemList)
                         branchAdapter.setList(upcomingEventsListItemList)
+
+                        //check IT
+                        upcomingEventsListItemList.forEach {
+                            val branchApiData: BranchApiData =
+                                it.data as? BranchApiData ?: return@forEach
+                            branchApiData.events.forEach { eventApiData ->
+                                eventApiData.isFavorite =
+                                    favoriteEventsRepository.isFavorite(eventApiData.id)
+                            }
+
+                        }
                     }
                 }
 
@@ -86,12 +132,43 @@ class UpcomingEventsActivity : AppCompatActivity() {
                     progressBar.hide()
                     favoriteButton.hide()
                     errorDataLoadText.show()
-                    setTextAndTextColor(
-                        errorDataLoadText,
+                    errorDataLoadText.setTextAndTextColor(
                         t.localizedMessage!!,
-                        this@UpcomingEventsActivity,
                         R.color.activity_upcoming_events_text_color_error)
                 }
             })
+    }
+
+    private fun getFavoriteClickListener(): FavoriteClickListener {
+        return object : FavoriteClickListener {
+            override fun onClick(eventData: EventApiData) {
+                onFavoriteClick(eventData)
+            }
+        }
+    }
+
+    private fun getBranchTitleClickListener(): BranchTitleClickListener {
+        return object : BranchTitleClickListener {
+            override fun onBranchTitleClick(
+                branchData: BranchApiData
+            ) {
+                val branchId: Int = branchData.id ?: return
+                val branchTitle: String = branchData.title ?: return
+                navigateToAllEventsScreenActivity(
+                    branchId,
+                    branchTitle
+                )
+            }
+        }
+    }
+
+    private fun navigateToAllEventsScreenActivity(
+        branchId: Int,
+        branchTitle: String
+    ) {
+        val intent = Intent(this, AllEventsScreenActivity::class.java)
+        intent.putExtra("branchId", branchId)
+        intent.putExtra("branchTitle", branchTitle)
+        startActivity(intent)
     }
 }

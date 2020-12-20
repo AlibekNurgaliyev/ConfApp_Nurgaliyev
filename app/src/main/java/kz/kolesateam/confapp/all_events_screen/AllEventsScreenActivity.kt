@@ -1,4 +1,4 @@
-package kz.kolesateam.confapp.alleventsscreen
+package kz.kolesateam.confapp.all_events_screen
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,22 +7,14 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.events.data.EventRepository
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
-import kz.kolesateam.confapp.events.presentation.view.BRANCH_ID
-import kz.kolesateam.confapp.events.presentation.view.TITLE_NAME
-import kz.kolesateam.confapp.events.utils.model.ResponseData
-import kz.kolesateam.confapp.sharedPreferencesLoadData
-import kz.kolesateam.confapp.show
+import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.showShortToastMessage
-import kz.kolesateam.confapp.hide
+import org.koin.android.viewmodel.ext.android.viewModel
 
 class AllEventsScreenActivity : AppCompatActivity() {
 
@@ -32,17 +24,23 @@ class AllEventsScreenActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var activityAllEventsScreenEventName: TextView
 
-    private val eventsRepository: EventRepository = EventRepository()
+    //private val eventsRepositoryDefaultAll: DefaultAllEventRepository = DefaultAllEventRepository()
+    private val allEventsViewModel: AllEventsViewModel by viewModel()
     private val allEventsScreenAdapter: AllEventsScreenAdapter = AllEventsScreenAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_events_screen)
-        bindViews()
-        loadEvents()
+        val branchId = intent.getIntExtra("branchId", 0)
+        val branchTitle = intent.getStringExtra("branchTitle")
+        bindViews(branchTitle)
+        observeAllEventsViewModel()
+        allEventsViewModel.onStart(branchId)
     }
 
-    private fun bindViews() {
+    private fun bindViews(
+        branchTitle: String?
+    ) {
         recyclerViewAllEvents = findViewById(R.id.activity_all_events_screen_recycler_view)
         progressBar = findViewById(R.id.activity_all_events_screen_progress_bar)
         activityAllEventsScreenArrowBack = findViewById(R.id.activity_all_events_screen_arrow_back)
@@ -55,30 +53,21 @@ class AllEventsScreenActivity : AppCompatActivity() {
             navigateUpcomingEvents()
         }
         activityAllEventsScreenFavoriteButton.setOnClickListener {
-            showShortToastMessage(this, "Favorites")
+            showShortToastMessage( "Favorites")
         }
-        activityAllEventsScreenEventName.text = sharedPreferencesLoadData(this, TITLE_NAME)
+        activityAllEventsScreenEventName.text = branchTitle
     }
 
-    private fun loadEvents() {
-        progressBar.show()
-        GlobalScope.launch(Dispatchers.Main) {
-            val response: ResponseData<List<EventApiData>, String> = withContext(Dispatchers.IO) {
-                eventsRepository.getEvents(
-                    sharedPreferencesLoadData(this@AllEventsScreenActivity, BRANCH_ID)
-                )
-            }
-            when (response) {
-                is ResponseData.Success -> {
-                    showResult(response.result)
-                    progressBar.hide()
-                }
-                is ResponseData.Error -> {
-                    showError(response.error)
-                    progressBar.hide()
-                }
-            }
-        }
+    private fun observeAllEventsViewModel() {
+        allEventsViewModel.getProgressLiveData().observe(this, ::handleProgressBarState)
+        allEventsViewModel.getAllEventsLiveData().observe(this, ::showResult)
+        allEventsViewModel.getErrorLiveData().observe(this, ::showError)
+    }
+
+    private fun handleProgressBarState(
+        progressState: ProgressState
+    ) {
+        progressBar.isVisible = progressState is ProgressState.Loading
     }
 
     private fun showResult(eventApiDataList: List<EventApiData>) {
