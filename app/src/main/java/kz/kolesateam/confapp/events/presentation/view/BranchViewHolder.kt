@@ -11,9 +11,10 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.alleventsscreen.AllEventsScreenActivity
 import kz.kolesateam.confapp.di.BRANCH_ID_DATA_SOURCE
 import kz.kolesateam.confapp.events.data.datasource.BranchIdDataSource
+import kz.kolesateam.confapp.events.data.datasource.FavoriteClickListener
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
-import kz.kolesateam.confapp.onFavoriteClick
+
 import kz.kolesateam.confapp.sharedPreferencesSaveData
 import kz.kolesateam.confapp.showShortToastMessage
 import org.koin.core.qualifier.named
@@ -23,7 +24,10 @@ const val BRANCH_ID = "branch_id"
 const val TITLE_NAME = "title_name"
 const val DATE_AND_PLACE_FORMAT = "%s - %s • %s"
 
-class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class BranchViewHolder(
+    itemView: View,
+    private val favoriteClickListener: FavoriteClickListener
+    ) : RecyclerView.ViewHolder(itemView) {
     //HERE!!
 //    private val branchIdDataSource:BranchIdDataSource by inject(named(BRANCH_ID_DATA_SOURCE))
 
@@ -116,14 +120,17 @@ class BranchViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             currentEvent.isFavorite = !currentEvent.isFavorite
             val favoriteImageResource = getFavoriteImageResource(currentEvent.isFavorite)
             iconFavoriteCurrent.setImageResource(favoriteImageResource)
-            onFavoriteClick(currentEvent)
+            favoriteClickListener.onClick(currentEvent)
+//            onFavoriteClick(currentEvent)
+
         }
 
         iconFavoriteNext.setOnClickListener {
             nextEvent.isFavorite = !nextEvent.isFavorite
             val favoriteImageResource = getFavoriteImageResource(nextEvent.isFavorite)
             iconFavoriteNext.setImageResource(favoriteImageResource)
-            onFavoriteClick(nextEvent)
+            favoriteClickListener.onClick(nextEvent)
+//            onFavoriteClick(nextEvent)
         }
         branchItemScrollView.onScroll()
     }

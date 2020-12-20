@@ -30,9 +30,9 @@ fun iconFavoriteClick(isIconFavoriteClicked: Boolean, iconFavorite: ImageView): 
     }
 }
 
-fun onFavoriteClick(eventData:EventApiData) {
-    UpcomingEventsActivity.onFavoriteClick(eventData)
-}
+//fun onFavoriteClick(eventData:EventApiData) {
+//    UpcomingEventsActivity.onFavoriteClick(eventData)
+//}
 
 fun sharedPreferencesSaveData(currentContext: Context, userName: String, constant: String) {
     val sharedPreferences: SharedPreferences =

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.di.MEMORY_DATA_SOURCE
+import kz.kolesateam.confapp.events.data.datasource.FavoriteClickListener
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.data.models.BranchApiData
@@ -36,14 +37,13 @@ class UpcomingEventsActivity : AppCompatActivity() {
 
     private val favoriteEventsRepository: FavoriteEventsRepository by inject()
 
-
     private lateinit var errorDataLoadText: TextView
     private lateinit var progressBar: ProgressBar
     private lateinit var recyclerView: RecyclerView
     private lateinit var favoriteButton: Button
     private lateinit var userName: String
 
-    private val branchAdapter: BranchAdapter = BranchAdapter()
+    private val branchAdapter: BranchAdapter = BranchAdapter(getFavoriteClickListener())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,7 +78,8 @@ class UpcomingEventsActivity : AppCompatActivity() {
             LinearLayoutManager.VERTICAL,
             false
         )
-        favoriteButton.setOnClickListener{
+        favoriteButton.setOnClickListener {
+            getFavoriteClickListener()
             startActivity(Intent(this, FavoriteEventsActivity::class.java))
         }
     }
@@ -123,5 +124,13 @@ class UpcomingEventsActivity : AppCompatActivity() {
                         R.color.activity_upcoming_events_text_color_error)
                 }
             })
+    }
+
+    private fun getFavoriteClickListener(): FavoriteClickListener {
+        return object : FavoriteClickListener {
+            override fun onClick(eventData: EventApiData) {
+                onFavoriteClick(eventData)
+            }
+        }
     }
 }

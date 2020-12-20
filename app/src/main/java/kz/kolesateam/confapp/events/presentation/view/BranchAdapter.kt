@@ -5,17 +5,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.di.favoriteEventsModule
+import kz.kolesateam.confapp.events.data.datasource.FavoriteClickListener
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.UpcomingEventsListItem
+import kz.kolesateam.confapp.iconFavoriteClick
 
-class BranchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class BranchAdapter (
+private val favoriteClickListener: FavoriteClickListener
+): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val dataList: MutableList<UpcomingEventsListItem> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             1 -> HeaderViewHolder(LayoutInflater.from(parent.context)
                 .inflate(R.layout.header_layout, parent, false))
-            else -> BranchViewHolder(View.inflate(parent.context, R.layout.branch_item, null))
+            else -> BranchViewHolder(View.inflate(parent.context, R.layout.branch_item, null) ,favoriteClickListener)
         }
     }
 
