@@ -114,6 +114,17 @@ class UpcomingEventsActivity : AppCompatActivity() {
                         upcomingEventsListItemList.add(headerListItem)
                         upcomingEventsListItemList.addAll(branchListItemList)
                         branchAdapter.setList(upcomingEventsListItemList)
+
+                        //check IT
+                        upcomingEventsListItemList.forEach {
+                            val branchApiData: BranchApiData =
+                                it.data as? BranchApiData ?: return@forEach
+                            branchApiData.events.forEach { eventApiData ->
+                                eventApiData.isFavorite =
+                                    favoriteEventsRepository.isFavorite(eventApiData.id)
+                            }
+
+                        }
                     }
                 }
 

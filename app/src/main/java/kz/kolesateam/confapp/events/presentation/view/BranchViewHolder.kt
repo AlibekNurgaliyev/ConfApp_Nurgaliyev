@@ -117,6 +117,12 @@ class BranchViewHolder(
             favoriteClickListener.onClick(nextEvent)
         }
         branchItemScrollView.onScroll()
+
+        val favoriteImageResourceCurrent = getFavoriteImageResource(currentEvent.isFavorite)
+        iconFavoriteCurrent.setImageResource(favoriteImageResourceCurrent)
+
+        val favoriteImageResourceNext = getFavoriteImageResource(nextEvent.isFavorite)
+        iconFavoriteNext.setImageResource(favoriteImageResourceNext)
     }
 
     private fun HorizontalScrollView.onScroll() {
