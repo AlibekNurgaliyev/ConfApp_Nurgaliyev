@@ -1,6 +1,5 @@
 package kz.kolesateam.confapp.events.presentation.view
 
-import android.content.Intent
 import android.view.View
 import android.widget.HorizontalScrollView
 import android.widget.ImageView
@@ -8,24 +7,19 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.all_events_screen.AllEventsScreenActivity
 import kz.kolesateam.confapp.events.data.datasource.FavoriteClickListener
 import kz.kolesateam.confapp.events.data.models.BranchApiData
 import kz.kolesateam.confapp.events.data.models.EventApiData
-
-import kz.kolesateam.confapp.sharedPreferencesSaveData
+import kz.kolesateam.confapp.events.presentation.BranchTitleClickListener
 import kz.kolesateam.confapp.showShortToastMessage
 
-const val BRANCH_ID = "branch_id"
-const val TITLE_NAME = "title_name"
 const val DATE_AND_PLACE_FORMAT = "%s - %s • %s"
 
 class BranchViewHolder(
     itemView: View,
-    private val favoriteClickListener: FavoriteClickListener
-    ) : RecyclerView.ViewHolder(itemView) {
-    //HERE!!
-//    private val branchIdDataSource:BranchIdDataSource by inject(named(BRANCH_ID_DATA_SOURCE))
+    private val favoriteClickListener: FavoriteClickListener,
+    private val branchTitleClickListener: BranchTitleClickListener
+) : RecyclerView.ViewHolder(itemView) {
 
     private lateinit var currentEvent: EventApiData
     private lateinit var nextEvent: EventApiData
@@ -98,18 +92,15 @@ class BranchViewHolder(
         eventTitleNext.text = nextEvent.title
 
         branchTitleAndArrow.setOnClickListener {
-            //need to take this BRANCHID value
-            sharedPreferencesSaveData(itemView.context, branchApiData.id!!.toString(), BRANCH_ID)
-            sharedPreferencesSaveData(itemView.context, branchApiData.title!!, TITLE_NAME)
-            navigateToAllEventsScreenActivity()
+            branchTitleClickListener.onBranchTitleClick(branchApiData)
         }
 
         branchCurrentEvent.setOnClickListener {
-            showShortToastMessage(itemView.context, eventTitleCurrent.text)
+            itemView.context.showShortToastMessage(eventTitleCurrent.text)
         }
 
         branchNextEvent.setOnClickListener {
-            showShortToastMessage(itemView.context, eventTitleNext.text)
+            itemView.context.showShortToastMessage(eventTitleNext.text)
         }
 
         iconFavoriteCurrent.setOnClickListener {
@@ -127,14 +118,6 @@ class BranchViewHolder(
         }
         branchItemScrollView.onScroll()
     }
-
-    private fun navigateToAllEventsScreenActivity() {
-        val intent = Intent(itemView.context, AllEventsScreenActivity::class.java)
-        itemView.context.startActivity(intent)
-    }
-//    private fun saveBranchIdDataSource(branchId: String) {
-//        branchIdDataSource.saveUserName(branchId)
-//    }
 
     private fun HorizontalScrollView.onScroll() {
         branchItemScrollView.viewTreeObserver?.addOnScrollChangedListener {
@@ -156,4 +139,3 @@ class BranchViewHolder(
         else -> R.drawable.ic_favorite_border
     }
 }
-

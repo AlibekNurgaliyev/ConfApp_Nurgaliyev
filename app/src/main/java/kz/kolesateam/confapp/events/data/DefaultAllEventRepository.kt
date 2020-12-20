@@ -10,10 +10,15 @@ import java.lang.Exception
 class DefaultAllEventRepository(
     private val upcomingEventsDataSource: UpcomingEventsDataSource
 ) : AllEventsRepository {
-    override fun getAllEvents(branchIdName: String): ResponseData<List<EventApiData>, String> {
+
+    override fun getAllEvents(
+        branchIdName: String
+    ): ResponseData<List<EventApiData>, String> {
         return try {
             val response: Response<List<EventApiData>> =
-                upcomingEventsDataSource.getEvents(branchIdName).execute()
+                upcomingEventsDataSource.getEvents(
+                    branchIdName
+                ).execute()
 
             if (response.isSuccessful) {
                 ResponseData.Success(response.body()!!)

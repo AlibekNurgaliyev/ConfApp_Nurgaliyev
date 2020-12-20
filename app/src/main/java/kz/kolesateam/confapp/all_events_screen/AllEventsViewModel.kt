@@ -7,16 +7,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kz.kolesateam.confapp.events.data.datasource.BranchIdDataSource
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.utils.model.ResponseData
 import kz.kolesateam.confapp.models.ProgressState
 
-
-//private val userNameDataSource: UserNameDataSource by inject(named(MEMORY_DATA_SOURCE))
 class AllEventsViewModel(
-    private val allEventsRepository: AllEventsRepository,
-    private val branchIdDataSource: BranchIdDataSource
+    private val allEventsRepository: AllEventsRepository
 ) : ViewModel() {
 
     private val progressLiveData: MutableLiveData<ProgressState> = MutableLiveData()
@@ -27,18 +23,20 @@ class AllEventsViewModel(
     fun getAllEventsLiveData(): LiveData<List<EventApiData>> = allEventsLiveData
     fun getErrorLiveData(): LiveData<String> = errorLiveData
 
-
-    fun onStart() {
-        loadEvents()
+    fun onStart(
+        branchId: Int
+    ) {
+        loadEvents(branchId)
     }
 
-    private fun loadEvents() {
+    private fun loadEvents(
+        branchId: Int
+    ) {
         GlobalScope.launch(Dispatchers.Main) {
             progressLiveData.value = ProgressState.Loading
             val response: ResponseData<List<EventApiData>, String> = withContext(Dispatchers.IO) {
                 allEventsRepository.getAllEvents(
-                    //sharedPreferencesLoadData(this@AllEventsScreenActivity, BRANCH_ID)
-                    branchIdDataSource.getBranchId().toString()
+                    branchId.toString()
                 )
             }
             when (response) {

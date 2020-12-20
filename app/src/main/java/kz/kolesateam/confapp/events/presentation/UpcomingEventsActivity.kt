@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.all_events_screen.AllEventsScreenActivity
 import kz.kolesateam.confapp.di.MEMORY_DATA_SOURCE
 import kz.kolesateam.confapp.events.data.datasource.FavoriteClickListener
 import kz.kolesateam.confapp.events.data.datasource.UpcomingEventsDataSource
@@ -20,15 +21,15 @@ import kz.kolesateam.confapp.events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
 import kz.kolesateam.confapp.favorite_events.presentation.FavoriteEventsActivity
 import kz.kolesateam.confapp.hide
-import kz.kolesateam.confapp.show
 import kz.kolesateam.confapp.setTextAndTextColor
+import kz.kolesateam.confapp.show
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-private const val DEFAULT_USER_NAME = "Nonoame"
+private const val DEFAULT_USER_NAME = "No_name"
 
 class UpcomingEventsActivity : AppCompatActivity() {
     private val upcomingEventsDataSource: UpcomingEventsDataSource by inject()
@@ -43,7 +44,10 @@ class UpcomingEventsActivity : AppCompatActivity() {
     private lateinit var favoriteButton: Button
     private lateinit var userName: String
 
-    private val branchAdapter: BranchAdapter = BranchAdapter(getFavoriteClickListener())
+    private val branchAdapter: BranchAdapter = BranchAdapter(
+        favoriteClickListener = getFavoriteClickListener(),
+        branchTitleClickListener = getBranchTitleClickListener()
+    )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -117,10 +121,8 @@ class UpcomingEventsActivity : AppCompatActivity() {
                     progressBar.hide()
                     favoriteButton.hide()
                     errorDataLoadText.show()
-                    setTextAndTextColor(
-                        errorDataLoadText,
+                    errorDataLoadText.setTextAndTextColor(
                         t.localizedMessage!!,
-                        this@UpcomingEventsActivity,
                         R.color.activity_upcoming_events_text_color_error)
                 }
             })
@@ -132,5 +134,30 @@ class UpcomingEventsActivity : AppCompatActivity() {
                 onFavoriteClick(eventData)
             }
         }
+    }
+
+    private fun getBranchTitleClickListener(): BranchTitleClickListener {
+        return object : BranchTitleClickListener {
+            override fun onBranchTitleClick(
+                branchData: BranchApiData
+            ) {
+                val branchId: Int = branchData.id ?: return
+                val branchTitle: String = branchData.title ?: return
+                navigateToAllEventsScreenActivity(
+                    branchId,
+                    branchTitle
+                )
+            }
+        }
+    }
+
+    private fun navigateToAllEventsScreenActivity(
+        branchId: Int,
+        branchTitle: String
+    ) {
+        val intent = Intent(this, AllEventsScreenActivity::class.java)
+        intent.putExtra("branchId", branchId)
+        intent.putExtra("branchTitle", branchTitle)
+        startActivity(intent)
     }
 }

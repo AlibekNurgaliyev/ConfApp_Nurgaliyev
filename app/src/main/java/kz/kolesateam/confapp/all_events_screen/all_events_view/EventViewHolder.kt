@@ -40,7 +40,7 @@ class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         eventTitle.text = eventApiData.title
 
         branchEvent.setOnClickListener {
-            showShortToastMessage(itemView.context, eventTitle.text)
+            itemView.context.showShortToastMessage(eventTitle.text)
         }
 
         iconFavorite.setOnClickListener {

@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
-import kz.kolesateam.confapp.events.presentation.view.TITLE_NAME
 import kz.kolesateam.confapp.models.ProgressState
-import kz.kolesateam.confapp.sharedPreferencesLoadData
 import kz.kolesateam.confapp.showShortToastMessage
 import org.koin.android.viewmodel.ext.android.viewModel
 
@@ -33,13 +31,16 @@ class AllEventsScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_all_events_screen)
-        bindViews()
-//        loadEvents()
+        val branchId = intent.getIntExtra("branchId", 0)
+        val branchTitle = intent.getStringExtra("branchTitle")
+        bindViews(branchTitle)
         observeAllEventsViewModel()
-        allEventsViewModel.onStart()
+        allEventsViewModel.onStart(branchId)
     }
 
-    private fun bindViews() {
+    private fun bindViews(
+        branchTitle: String?
+    ) {
         recyclerViewAllEvents = findViewById(R.id.activity_all_events_screen_recycler_view)
         progressBar = findViewById(R.id.activity_all_events_screen_progress_bar)
         activityAllEventsScreenArrowBack = findViewById(R.id.activity_all_events_screen_arrow_back)
@@ -52,9 +53,9 @@ class AllEventsScreenActivity : AppCompatActivity() {
             navigateUpcomingEvents()
         }
         activityAllEventsScreenFavoriteButton.setOnClickListener {
-            showShortToastMessage(this, "Favorites")
+            showShortToastMessage( "Favorites")
         }
-        activityAllEventsScreenEventName.text = sharedPreferencesLoadData(this, TITLE_NAME)
+        activityAllEventsScreenEventName.text = branchTitle
     }
 
     private fun observeAllEventsViewModel() {
