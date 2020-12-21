@@ -1,12 +1,12 @@
 package kz.kolesateam.confapp.hello.presentation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
+import androidx.appcompat.app.AppCompatActivity
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.di.MEMORY_DATA_SOURCE
 import kz.kolesateam.confapp.upcoming_events.data.datasource.UserNameDataSource

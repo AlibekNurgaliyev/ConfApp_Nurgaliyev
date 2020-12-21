@@ -9,8 +9,6 @@ import kz.kolesateam.confapp.upcoming_events.data.models.EventApiData
 import kz.kolesateam.confapp.upcoming_events.utils.model.ResponseData
 import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
 
-const val DEFAULT_BRANCH_ID = 0
-
 class EventDetailsViewModel(
     private val eventDetailsRepository: EventDetailsRepository,
     private val favoriteEventsRepository: FavoriteEventsRepository
@@ -20,16 +18,13 @@ class EventDetailsViewModel(
         MutableLiveData()
     val errorMessageLiveData: MutableLiveData<ResponseData.Error<String>> = MutableLiveData()
 
-    private val eventIdLiveData: MutableLiveData<Int> = MutableLiveData()
-
     fun onStarted(
-        eventId: Int,
+        eventId: Int
     ) {
-        eventIdLiveData.value = eventId
-        getEventDetails()
+        getEventDetails(eventId)
     }
 
-    private fun getEventDetails() = viewModelScope.launch {
+    private fun getEventDetails(eventId: Int) = viewModelScope.launch {
         eventDetailsRepository.getEventDetails(
             result = {
                 eventDetailsLiveData.value = ResponseData.Success(prepareEvent(it))
@@ -37,7 +32,7 @@ class EventDetailsViewModel(
             fail = {
                 errorMessageLiveData.value = ResponseData.Error(it.toString())
             },
-            eventId = eventIdLiveData.value ?: DEFAULT_BRANCH_ID
+            eventId = eventId
         )
     }
 

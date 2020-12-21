@@ -5,9 +5,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.iconFavoriteClick
 import kz.kolesateam.confapp.upcoming_events.data.models.EventApiData
 import kz.kolesateam.confapp.upcoming_events.presentation.view.DATE_AND_PLACE_FORMAT
-import kz.kolesateam.confapp.iconFavoriteClick
 
 class EventViewHolder(
     view: View,
@@ -33,6 +33,8 @@ class EventViewHolder(
     }
 
     fun bind(eventApiData: EventApiData) {
+        eventId = eventApiData.id!!
+
         val eventDateAndPlaceText: String = DATE_AND_PLACE_FORMAT.format(
             eventApiData.startTime,
             eventApiData.endTime,

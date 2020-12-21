@@ -1,6 +1,5 @@
 package kz.kolesateam.confapp.event_details.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
@@ -9,7 +8,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import kz.kolesateam.confapp.R
-import kz.kolesateam.confapp.all_events.AllEventsScreenActivity
 import kz.kolesateam.confapp.event_details.EVENT_ID
 import kz.kolesateam.confapp.upcoming_events.data.models.EventApiData
 import kz.kolesateam.confapp.upcoming_events.presentation.view.DATE_AND_PLACE_FORMAT
@@ -86,8 +84,6 @@ class DetailsEventActivity : AppCompatActivity() {
         isSpeakerInvited(responseData.result.speaker?.isInvited!!)
 
         setFavouriteClickListener(responseData.result)
-
-
     }
 
     private fun showError(responseData: ResponseData.Error<String>) {

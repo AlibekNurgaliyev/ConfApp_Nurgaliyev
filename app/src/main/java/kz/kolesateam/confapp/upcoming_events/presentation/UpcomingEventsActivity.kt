@@ -12,6 +12,11 @@ import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.all_events.AllEventsScreenActivity
 import kz.kolesateam.confapp.di.MEMORY_DATA_SOURCE
 import kz.kolesateam.confapp.event_details.EventDetailsRouter
+import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
+import kz.kolesateam.confapp.favorite_events.presentation.FavoriteEventsActivity
+import kz.kolesateam.confapp.hide
+import kz.kolesateam.confapp.setTextAndTextColor
+import kz.kolesateam.confapp.show
 import kz.kolesateam.confapp.upcoming_events.data.datasource.FavoriteClickListener
 import kz.kolesateam.confapp.upcoming_events.data.datasource.UpcomingEventsDataSource
 import kz.kolesateam.confapp.upcoming_events.data.datasource.UserNameDataSource
@@ -20,11 +25,6 @@ import kz.kolesateam.confapp.upcoming_events.data.models.EventApiData
 import kz.kolesateam.confapp.upcoming_events.data.models.UpcomingEventsListItem
 import kz.kolesateam.confapp.upcoming_events.presentation.view.BranchAdapter
 import kz.kolesateam.confapp.upcoming_events.presentation.view.RecyclerViewListener
-import kz.kolesateam.confapp.favorite_events.domain.FavoriteEventsRepository
-import kz.kolesateam.confapp.favorite_events.presentation.FavoriteEventsActivity
-import kz.kolesateam.confapp.hide
-import kz.kolesateam.confapp.setTextAndTextColor
-import kz.kolesateam.confapp.show
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
 import retrofit2.Call

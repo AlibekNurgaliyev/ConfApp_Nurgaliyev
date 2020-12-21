@@ -44,7 +44,6 @@ class BranchViewHolder(
     private val speakerCompanyCurrent: TextView =
         branchCurrentEvent.findViewById(R.id.event_company_name)
     private val eventTitleCurrent: TextView = branchCurrentEvent.findViewById(R.id.event_title)
-    private var eventIdCurrent = 0
 
     private val eventDateAndPlaceNext: TextView =
         branchNextEvent.findViewById(R.id.date_and_place_text)
@@ -54,7 +53,6 @@ class BranchViewHolder(
         branchNextEvent.findViewById(R.id.event_company_name)
     private val eventTitleNext: TextView =
         branchNextEvent.findViewById(R.id.event_title)
-    private var eventIdNext = 0
 
     init {
         branchCurrentEvent.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
@@ -63,7 +61,8 @@ class BranchViewHolder(
             recyclerViewListener.onCurrentBrunchClick(
                 adapterPosition,
                 eventTitleCurrent.text.toString(),
-                eventIdCurrent
+                currentEvent.id!!
+
             )
         }
 
@@ -71,7 +70,7 @@ class BranchViewHolder(
             recyclerViewListener.onCurrentBrunchClick(
                 adapterPosition,
                 eventTitleNext.text.toString(),
-                eventIdNext
+                nextEvent.id!!
             )
         }
     }
