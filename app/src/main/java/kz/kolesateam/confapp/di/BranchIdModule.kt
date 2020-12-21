@@ -1,7 +1,7 @@
 package kz.kolesateam.confapp.di
 
-import kz.kolesateam.confapp.events.data.datasource.BranchIdDataSource
-import kz.kolesateam.confapp.events.data.datasource.BranchIdMemoryDataSource
+import kz.kolesateam.confapp.upcoming_events.data.datasource.BranchIdDataSource
+import kz.kolesateam.confapp.upcoming_events.data.datasource.BranchIdMemoryDataSource
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

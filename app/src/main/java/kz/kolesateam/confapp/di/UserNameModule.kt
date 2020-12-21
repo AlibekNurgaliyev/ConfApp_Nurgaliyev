@@ -1,8 +1,8 @@
 package kz.kolesateam.confapp.di
 
-import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
-import kz.kolesateam.confapp.events.data.datasource.UserNameMemoryDataSource
-import kz.kolesateam.confapp.events.data.datasource.UserNameSharedPrefsDataSource
+import kz.kolesateam.confapp.upcoming_events.data.datasource.UserNameDataSource
+import kz.kolesateam.confapp.upcoming_events.data.datasource.UserNameMemoryDataSource
+import kz.kolesateam.confapp.upcoming_events.data.datasource.UserNameSharedPrefsDataSource
 import org.koin.core.module.Module
 import org.koin.core.qualifier.named
 import org.koin.dsl.module

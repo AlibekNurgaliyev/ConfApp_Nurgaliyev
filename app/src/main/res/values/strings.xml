@@ -17,4 +17,11 @@
     <string name="activity_events_card_layout_event_title">Event title example</string>
     <!--    activity_branch_item-->
     <string name="activity_branch_item_branch_title">Branch title example</string>
+    <!--    event_details-->
+    <string name="activity_event_details_speaker_status">Приглашенный спикер</string>
+    <string name="activity_event_details_event_description">Системные уведомления позволяют пользователям получать информацию, не заходя в приложение, и быстрее с ним взаимодействовать. Как использовать все возможности системы уведомлений? Как сделать уведомления в каждой версии ОС и использовать их возможности по максимуму? NotificationCompat не решит все за вас. Обо всем этом поговорим в докладе.</string>
+    <string name="activity_event_details_date_and_time">15:00 - 16:00 • Зал номер 5</string>
+    <string name="activity_event_details_speaker_job">Mobile Lead в Replika.ai</string>
+    <string name="activity_event_details_speaker_name">Кирилл Розов</string>
+    <string name="activity_event_details_event_title">Увлекательная жизнь в панели уведомлений</string>
 </resources>
