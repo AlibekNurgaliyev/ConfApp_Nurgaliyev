@@ -9,15 +9,13 @@ import org.koin.android.ext.android.inject
 
 class FavoriteEventsActivity : AppCompatActivity() {
 
-    private val favoriteEventsRepository : FavoriteEventsRepository by inject()
-
+    private val favoriteEventsRepository: FavoriteEventsRepository by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite_events)
-        val favoriteTextView :TextView =findViewById(R.id.favorite_text)
+        val favoriteTextView: TextView = findViewById(R.id.favorite_text)
         favoriteTextView.text = favoriteEventsRepository.getAllFavoriteEvents().toString()
 
     }
-
 }

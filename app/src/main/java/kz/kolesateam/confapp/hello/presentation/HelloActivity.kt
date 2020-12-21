@@ -9,12 +9,10 @@ import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
 import kz.kolesateam.confapp.di.MEMORY_DATA_SOURCE
-import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
-import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
+import kz.kolesateam.confapp.upcoming_events.data.datasource.UserNameDataSource
+import kz.kolesateam.confapp.upcoming_events.presentation.UpcomingEventsActivity
 import org.koin.android.ext.android.inject
 import org.koin.core.qualifier.named
-
-const val APPLICATION_SHARED_PREFERENCES = "application"
 
 class HelloActivity : AppCompatActivity() {
 
