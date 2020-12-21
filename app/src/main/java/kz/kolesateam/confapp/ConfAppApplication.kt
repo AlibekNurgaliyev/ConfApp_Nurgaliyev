@@ -15,7 +15,8 @@ class ConfAppApplication : Application() {
                 applicationModule,
                 userNameModule,
                 favoriteEventsModule,
-                branchIdModule
+                branchIdModule,
+                eventDetailsModule
             )
         }
     }

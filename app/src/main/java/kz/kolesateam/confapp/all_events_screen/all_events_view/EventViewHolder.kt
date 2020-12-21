@@ -1,17 +1,25 @@
 package kz.kolesateam.confapp.all_events_screen.all_events_view
 
+import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.event_details.presentation.DetailsEventActivity
 import kz.kolesateam.confapp.events.data.models.EventApiData
+import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 import kz.kolesateam.confapp.iconFavoriteClick
 import kz.kolesateam.confapp.showShortToastMessage
 import kz.kolesateam.confapp.events.presentation.view.DATE_AND_PLACE_FORMAT
+import kz.kolesateam.confapp.favorite_events.presentation.FavoriteEventsActivity
 
-class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
+//class EventViewHolder(view: View, eventViewListener: EventViewListener) : RecyclerView.ViewHolder(view) {
+class EventViewHolder(
+    view: View,
+    eventViewListener: EventViewListener
+) : RecyclerView.ViewHolder(view) {
     private val eventDateAndPlace: TextView = view.findViewById(R.id.date_and_place_text)
     private val speakerName: TextView = view.findViewById(R.id.event_speaker_name)
     private val speakerCompany: TextView = view.findViewById(R.id.event_company_name)
@@ -23,8 +31,13 @@ class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
     private var isIconFavoriteClicked: Boolean = false
 
+    private var eventId: Int = 0
+
     init {
         view.findViewById<TextView>(R.id.event_state).visibility = View.INVISIBLE
+        view.setOnClickListener{
+            eventViewListener.onItemClick(adapterPosition, eventTitle.text.toString(), eventId)
+        }
     }
 
     fun bind(eventApiData: EventApiData) {
@@ -39,12 +52,20 @@ class EventViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         speakerCompany.text = eventApiData.speaker?.job
         eventTitle.text = eventApiData.title
 
-        branchEvent.setOnClickListener {
-            itemView.context.showShortToastMessage(eventTitle.text)
-        }
+//        branchEvent.setOnClickListener {
+//
+//            //itemView.context.showShortToastMessage(eventTitle.text)
+//            //TODOOO
+//    //        navigateToEventDetailsActivity()
+//        }
 
         iconFavorite.setOnClickListener {
             isIconFavoriteClicked = iconFavoriteClick(isIconFavoriteClicked, iconFavorite)
         }
     }
+
+//    private fun navigateToEventDetailsActivity() {
+//        val intent = Intent(itemView.context, DetailsEventActivity::class.java)
+//        startActivity(itemView.context)
+//    }
 }

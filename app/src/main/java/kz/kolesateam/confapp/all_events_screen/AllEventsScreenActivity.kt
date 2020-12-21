@@ -10,13 +10,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.all_events_screen.all_events_view.EventViewListener
+import kz.kolesateam.confapp.event_details.EventDetailsRouter
 import kz.kolesateam.confapp.events.data.models.EventApiData
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
 import kz.kolesateam.confapp.models.ProgressState
 import kz.kolesateam.confapp.showShortToastMessage
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class AllEventsScreenActivity : AppCompatActivity() {
+class AllEventsScreenActivity : AppCompatActivity() , EventViewListener{
 
     private lateinit var recyclerViewAllEvents: RecyclerView
     private lateinit var activityAllEventsScreenArrowBack: ImageView
@@ -26,7 +28,7 @@ class AllEventsScreenActivity : AppCompatActivity() {
 
     //private val eventsRepositoryDefaultAll: DefaultAllEventRepository = DefaultAllEventRepository()
     private val allEventsViewModel: AllEventsViewModel by viewModel()
-    private val allEventsScreenAdapter: AllEventsScreenAdapter = AllEventsScreenAdapter()
+    private val allEventsScreenAdapter: AllEventsScreenAdapter = AllEventsScreenAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,5 +82,9 @@ class AllEventsScreenActivity : AppCompatActivity() {
     private fun navigateUpcomingEvents() {
         val intent = Intent(this, UpcomingEventsActivity::class.java)
         startActivity(intent)
+    }
+
+    override fun onItemClick(position: Int, theme: String, eventId: Int) {
+        startActivity(EventDetailsRouter().createIntent(this, eventId))
     }
 }

@@ -12,5 +12,7 @@ data class SpeakerApiData(
     @JsonProperty("job")
     val job: String?,
     @JsonProperty("photoUrl")
-    val photoUrl: String?
+    val photoUrl: String?,
+    @JsonProperty("isInvited")
+    val isInvited: Boolean?
 )

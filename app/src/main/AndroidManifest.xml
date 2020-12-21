@@ -14,9 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".favorite_events.presentation.FavoriteEventsActivity"></activity>
-        <activity android:name=".events.presentation.UpcomingEventsActivity" />
-        <activity android:name=".all_events_screen.AllEventsScreenActivity" />
+
         <activity
             android:name=".hello.presentation.HelloActivity"
             android:theme="@style/SplashScreenTheme">
@@ -26,6 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".favorite_events.presentation.FavoriteEventsActivity"></activity>
+        <activity android:name=".events.presentation.UpcomingEventsActivity" />
+        <activity android:name=".all_events_screen.AllEventsScreenActivity" />
+        <activity android:name=".event_details.presentation.DetailsEventActivity" />
     </application>
 
 </manifest>
