@@ -3,20 +3,20 @@
     package="kz.kolesateam.confapp">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
+        android:name=".ConfAppApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_corona"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_corona_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true"
-        >
-        <activity android:name=".events.presentation.UpcomingEventsActivity"/>
-
+        android:usesCleartextTraffic="true">
+        <activity android:name=".favorite_events.presentation.FavoriteEventsActivity"></activity>
+        <activity android:name=".events.presentation.UpcomingEventsActivity" />
+        <activity android:name=".all_events_screen.AllEventsScreenActivity" />
         <activity
             android:name=".hello.presentation.HelloActivity"
             android:theme="@style/SplashScreenTheme">

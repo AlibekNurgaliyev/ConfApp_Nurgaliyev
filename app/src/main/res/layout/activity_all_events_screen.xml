@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/layout_spacing_8x"
+        >
+
+        <ImageView
+            android:id="@+id/activity_all_events_screen_arrow_back"
+            android:layout_width="@dimen/layout_spacing_32x"
+            android:layout_height="@dimen/layout_spacing_32x"
+            android:src="@drawable/ic_arrow_back"
+            />
+
+        <ImageView
+            android:id="@+id/activity_all_events_screen_kolesa_logo"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/layout_spacing_24x"
+            android:layout_weight="1"
+            android:src="@drawable/logo_kolesa_white"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/layout_spacing_40x"
+        android:layout_marginBottom="@dimen/layout_spacing_24x"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/activity_all_events_screen_event_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/layout_spacing_8x"
+            android:layout_marginBottom="@dimen/layout_spacing_8x"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_size_24x"
+            tools:text="Event Name"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/activity_all_events_screen_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bg"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/layout_spacing_95x"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:itemCount="5"
+            tools:listitem="@layout/all_events_item"
+            />
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/activity_all_events_screen_progress_bar"
+        android:layout_width="@dimen/activity_upcoming_events_progress_bar_size"
+        android:layout_height="@dimen/activity_upcoming_events_progress_bar_size"
+        android:layout_gravity="center"
+        android:indeterminateDrawable="@drawable/progress_bar"
+        android:padding="@dimen/layout_spacing_10x"
+        android:visibility="gone"
+        />
+
+    <TextView
+        android:id="@+id/activity_all_events_screen_data_load_failed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/activity_upcoming_events_text_color_error"
+        android:textStyle="bold"
+        android:visibility="gone"
+        />
+
+    <Button
+        android:id="@+id/activity_all_events_screen_button_favorite"
+        android:layout_width="@dimen/activity_upcoming_events_button_favorite_width"
+        android:layout_height="@dimen/activity_upcoming_events_button_favorite_height"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="@dimen/layout_spacing_40x"
+        android:background="@drawable/bg_button_favorite"
+        android:drawableStart="@drawable/ic_favorite_border"
+        android:paddingHorizontal="@dimen/layout_spacing_16x"
+        android:text="@string/activity_upcoming_events_favorite_text"
+        android:textAllCaps="false"
+        android:textColor="@color/events_card_state_color"
+        />
+</FrameLayout>

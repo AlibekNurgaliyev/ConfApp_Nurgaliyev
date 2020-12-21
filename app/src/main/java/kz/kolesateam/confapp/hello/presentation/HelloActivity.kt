@@ -1,8 +1,6 @@
 package kz.kolesateam.confapp.hello.presentation
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -10,13 +8,17 @@ import android.text.TextWatcher
 import android.widget.Button
 import android.widget.EditText
 import kz.kolesateam.confapp.R
+import kz.kolesateam.confapp.di.MEMORY_DATA_SOURCE
+import kz.kolesateam.confapp.events.data.datasource.UserNameDataSource
 import kz.kolesateam.confapp.events.presentation.UpcomingEventsActivity
+import org.koin.android.ext.android.inject
+import org.koin.core.qualifier.named
 
-const val USER_NAME_KEY = "user_name"
 const val APPLICATION_SHARED_PREFERENCES = "application"
-private const val BASE_URL = "http://37.143.8.68:2020/"
 
 class HelloActivity : AppCompatActivity() {
+
+    private val userNameDataSource: UserNameDataSource by inject(named(MEMORY_DATA_SOURCE))
 
     private val continueButton: Button by lazy {
         findViewById(R.id.button_continue)
@@ -29,21 +31,15 @@ class HelloActivity : AppCompatActivity() {
         val nameEditText: EditText = findViewById(R.id.edit_text_name)
         nameEditText.addTextChangedListener(textWatcher)
         continueButton.setOnClickListener {
-            saveName(nameEditText.text.toString())
+            saveUserName(nameEditText.text.toString())
             navigateToTestHelloActivity()
         }
     }
 
-    private fun saveName(userName: String) {
-        val sharedPreferences: SharedPreferences =
-            getSharedPreferences(
-                APPLICATION_SHARED_PREFERENCES,
-                Context.MODE_PRIVATE
-            )
-        val editor: SharedPreferences.Editor = sharedPreferences.edit()
-        editor.putString(USER_NAME_KEY, userName)
-        editor.apply()
+    private fun saveUserName(name: String) {
+        userNameDataSource.saveUserName(name)
     }
+
 
     private fun navigateToTestHelloActivity() {
         val testIntent = Intent(this, UpcomingEventsActivity::class.java)
